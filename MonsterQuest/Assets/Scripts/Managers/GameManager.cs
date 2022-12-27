@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using Random = System.Random;
+
 
 namespace MonsterQuest
 {
     public class GameManager : MonoBehaviour
     {
-        static Random myRandom = new Random();
         List<string> myHeroes = new List<string>();
         int myEnemyHP;
         const string myHeroDamageDice = "2d6";
@@ -43,16 +42,10 @@ namespace MonsterQuest
                 }
                 else
                 {
-                    stillAlive = "es " + JoinWithAnd(myHeroes);
+                    stillAlive = "es " + StringHelper.JoinWithAnd(myHeroes);
                 }
                 Console.WriteLine("After three grueling battles, the hero" + stillAlive + " return from the dungeons to live another day.");
             }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
 
         void SimulateBattle(Enemy anEnemy)
@@ -62,7 +55,7 @@ namespace MonsterQuest
                 myEnemyHP = anEnemy.myHP;
                 myEnemyIsAlive = true;
 
-                Console.WriteLine("The heroes " + JoinWithAnd(myHeroes) + " descend into the dungeon.");
+                Console.WriteLine("The heroes " + StringHelper.JoinWithAnd(myHeroes) + " descend into the dungeon.");
                 Console.WriteLine(anEnemy.myName + " with " + myEnemyHP + " HP appears!");
                 while (myEnemyHP > 0 && myHeroes.Count > 0)
                 {
@@ -72,7 +65,7 @@ namespace MonsterQuest
                         {
                             break;
                         }
-                        myHeroDamage = RollDices(myHeroDamageDice);
+                        myHeroDamage = DiceHelper.Roll(myHeroDamageDice);
                         myEnemyHP -= myHeroDamage;
                         if (myEnemyHP <= 0)
                         {
@@ -83,9 +76,9 @@ namespace MonsterQuest
                     }
                     if (myEnemyIsAlive)
                     {
-                        myConstitutionRoll = RollDices(myHeroConstitutionDice) + myHeroConstitution;
+                        myConstitutionRoll = DiceHelper.Roll(myHeroConstitutionDice) + myHeroConstitution;
                         myHeroIsSaved = myConstitutionRoll >= anEnemy.myConstitutionSaveNeeded;
-                        int attackedHeroIndex = GetRandom(myHeroes.Count) - 1;
+                        int attackedHeroIndex = DiceHelper.GetRandom(myHeroes.Count) - 1;
                         Console.WriteLine("The " + anEnemy.myName + " attacks " + myHeroes[attackedHeroIndex] + "!");
                         Console.Write(myHeroes[attackedHeroIndex] + " rolls a " + myConstitutionRoll);
 
@@ -120,71 +113,7 @@ namespace MonsterQuest
             myHeroes.Add(aFourthName);
         }
 
-        string JoinWithAnd(List<string> aListOfStrings, bool aUseSerialComma = false)
-        {
-            int sizeOfList = aListOfStrings.Count;
-            string lastItem = aListOfStrings[sizeOfList - 1];
-            aListOfStrings.RemoveAt(sizeOfList - 1);
-            sizeOfList--;
-
-            string joinedItems = string.Join(", ", aListOfStrings);
-
-            if (aUseSerialComma)
-            {
-                joinedItems += ", and " + lastItem;
-            }
-            else
-            {
-                joinedItems += " and " + lastItem;
-            }
-
-            aListOfStrings.Add(lastItem);
-
-            return joinedItems;
-        }
-
-        static int GetRandom(int max)
-        {
-            int result;
-            result = myRandom.Next(1, max + 1);
-            return result;
-        }
-
-        static int RollDices(string aDiceType)
-        {
-            string pattern = @"(\d{0,3})d([468]|10|20)(\s|([-+])(\d{1,2}))?";
-            int numberOfRolls = 1;
-            int facesOnDice = 0;
-            int followNumber = 0;
-            int result = 0;
-
-            MatchCollection matches = Regex.Matches(aDiceType, pattern);
-            foreach (Match match in matches)
-            {
-                GroupCollection data = match.Groups;
-
-                _ = int.TryParse(data[1].Value, out numberOfRolls);
-                _ = int.TryParse(data[2].Value, out facesOnDice);
-                _ = int.TryParse(data[5].Value, out followNumber);
-                if (data[4].Value == "-")
-                {
-                    followNumber -= (2 * followNumber);
-                }
-            }
-            if (numberOfRolls == 0)
-            {
-                numberOfRolls = 1;
-            }
-            for (int i = 1; i <= numberOfRolls; i++)
-            {
-                result += GetRandom(facesOnDice);
-            }
-
-            result += followNumber;
-
-
-            return result;
-        }
+        
 
         struct Enemy
         {
@@ -195,7 +124,7 @@ namespace MonsterQuest
             public Enemy(string aName, string aDiceNotation, int aConstitutionSaveNeeded)
             {
                 myName = aName;
-                myHP = RollDices(aDiceNotation);
+                myHP = DiceHelper.Roll(aDiceNotation);
                 myConstitutionSaveNeeded = aConstitutionSaveNeeded;
             }
         }
