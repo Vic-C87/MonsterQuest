@@ -6,65 +6,47 @@ namespace MonsterQuest
 {
     public class CombatManager : MonoBehaviour
     {
-        int myEnemyHP;
         [SerializeField]
         string myHeroDamageDice = "2d6";
-        int myHeroDamage;
         [SerializeField]
         string myHeroConstitutionDice = "d20";
         [SerializeField]
         int myHeroConstitution = 3;
+        
+        int myHeroDamage;
         int myConstitutionRoll;
         bool myHeroIsSaved;
 
         bool myEnemyIsAlive = true;
 
-
-        // Start is called before the first frame update
-        void Start()
+        public void Simulate(GameState aGameState)
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
-
-        public void Simulate(List<string> someHeroes, Enemy anEnemy, ref bool aHeroesAlive)
-        {
-            if (aHeroesAlive)
+            if (aGameState.myParty.Count() > 0)
             {
-                myEnemyHP = anEnemy.myHP;
                 myEnemyIsAlive = true;
 
-                Console.WriteLine("The heroes " + StringHelper.JoinWithAnd(someHeroes) + " descend into the dungeon.");
-                Console.WriteLine(anEnemy.myName + " with " + myEnemyHP + " HP appears!");
-                while (myEnemyHP > 0 && someHeroes.Count > 0)
+                Console.WriteLine("The heroes " + StringHelper.JoinWithAnd(aGameState.myParty.GetNames()) + " descend into the dungeon.");
+                Console.WriteLine(aGameState.myCombat.myMonster.myDisplayName + " with " + aGameState.myCombat.myMonster.myHitPoints + " HP appears!");
+                while (aGameState.myCombat.myMonster.myHitPoints > 0 && aGameState.myParty.Count() > 0)
                 {
-                    for (int i = 0; i < someHeroes.Count; i++)
+                    for (int i = 0; i < aGameState.myParty.Count(); i++)
                     {
-                        if (myEnemyHP == 0)
+                        if (aGameState.myCombat.myMonster.myHitPoints == 0)
                         {
+                            myEnemyIsAlive = false;
                             break;
                         }
                         myHeroDamage = DiceHelper.Roll(myHeroDamageDice);
-                        myEnemyHP -= myHeroDamage;
-                        if (myEnemyHP <= 0)
-                        {
-                            myEnemyHP = 0;
-                            myEnemyIsAlive = false;
-                        }
-                        Console.WriteLine(someHeroes[i] + " hits the " + anEnemy.myName + " for " + myHeroDamage + " damage. " + anEnemy.myName + " has " + myEnemyHP + " HP left.");
+                        aGameState.myCombat.myMonster.ReactToDamage(myHeroDamage);
+                        Console.WriteLine(aGameState.myParty.myCharacters[i].myDisplayName + " hits the " + aGameState.myCombat.myMonster.myDisplayName + " for " + myHeroDamage + " damage. " + aGameState.myCombat.myMonster.myDisplayName + " has " + aGameState.myCombat.myMonster.myHitPoints + " HP left.");
                     }
                     if (myEnemyIsAlive)
                     {
                         myConstitutionRoll = DiceHelper.Roll(myHeroConstitutionDice) + myHeroConstitution;
-                        myHeroIsSaved = myConstitutionRoll >= anEnemy.myConstitutionSaveNeeded;
-                        int attackedHeroIndex = DiceHelper.GetRandom(someHeroes.Count) - 1;
-                        Console.WriteLine("The " + anEnemy.myName + " attacks " + someHeroes[attackedHeroIndex] + "!");
-                        Console.Write(someHeroes[attackedHeroIndex] + " rolls a " + myConstitutionRoll);
+                        myHeroIsSaved = myConstitutionRoll >= aGameState.myCombat.myMonster.mySavingThrowDC;
+                        int attackedHeroIndex = DiceHelper.GetRandom(aGameState.myParty.Count()) - 1;
+                        Console.WriteLine("The " + aGameState.myCombat.myMonster.myDisplayName + " attacks " + aGameState.myParty.myCharacters[attackedHeroIndex].myDisplayName + "!");
+                        Console.Write(aGameState.myParty.myCharacters[attackedHeroIndex].myDisplayName + " rolls a " + myConstitutionRoll);
 
                         if (myHeroIsSaved)
                         {
@@ -73,18 +55,17 @@ namespace MonsterQuest
                         else
                         {
                             Console.WriteLine(" and fails to be saved...");
-                            someHeroes.RemoveAt(attackedHeroIndex);
+                            aGameState.myParty.myCharacters.RemoveAt(attackedHeroIndex);
                         }
                     }
                 }
                 if (!myEnemyIsAlive)
                 {
-                    Console.WriteLine("The " + anEnemy.myName + " collapses and the heroes celebrate their victory!");
+                    Console.WriteLine("The " + aGameState.myCombat.myMonster.myDisplayName + " collapses and the heroes celebrate their victory!");
                 }
                 else
                 {
-                    Console.WriteLine("The party has failed and the " + anEnemy.myName + " continues to attack unsuspecting adventurers.");
-                    aHeroesAlive = false;
+                    Console.WriteLine("The party has failed and the " + aGameState.myCombat.myMonster.myDisplayName + " continues to attack unsuspecting adventurers.");
                 }
             }
         }

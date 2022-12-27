@@ -5,14 +5,12 @@ namespace MonsterQuest
 {
     public class Party
     {
-        List<Character> myCharacters;
+        public List<Character> myCharacters { get; private set; }
 
         public Party(IEnumerable<Character> someInitialCharacters)
         {
             myCharacters = new List<Character>(someInitialCharacters);
         }
-
-        public IEnumerable<Character> Characters => myCharacters;
 
         public bool RemoveCharacter(Character aCharacterToRemove)
         {
@@ -46,6 +44,16 @@ namespace MonsterQuest
                 return false;
             }
             return true;
+        }
+
+        public List<string> GetNames()
+        {
+            List<string> names = new List<string>();
+            foreach (Character character in myCharacters)
+            {
+                names.Add(character.myDisplayName);
+            }
+            return names;
         }
 
     }

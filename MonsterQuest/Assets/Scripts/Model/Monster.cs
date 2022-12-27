@@ -18,7 +18,7 @@ namespace MonsterQuest
 
         public void ReactToDamage(int aDamageAmount)
         {
-            myHitPoints = Math.Max(0, aDamageAmount);
+            myHitPoints = Math.Max(0, myHitPoints - aDamageAmount);
         }
 
     }
