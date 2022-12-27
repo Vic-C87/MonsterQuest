@@ -6,7 +6,7 @@ namespace MonsterQuest
     public class GameState
     {
         public Party myParty { get; private set; }
-        public Combat myCombat { get; set; }
+        public Combat myCombat { get; private set; }
 
         public GameState(Party aParty)
         {
