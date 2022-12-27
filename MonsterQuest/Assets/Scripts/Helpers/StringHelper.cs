@@ -1,20 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace MonsterQuest
 {
     public static class StringHelper
     {
 
-        public static string JoinWithAnd(List<string> aListOfStrings, bool aUseSerialComma = false)
+        public static string JoinWithAnd(List<string> aListOfItems, bool aUseSerialComma = false)
         {
-            int sizeOfList = aListOfStrings.Count;
-            string lastItem = aListOfStrings[sizeOfList - 1];
-            aListOfStrings.RemoveAt(sizeOfList - 1);
-            sizeOfList--;
-
-            string joinedItems = string.Join(", ", aListOfStrings);
+            int sizeOfList = aListOfItems.Count;
+            string lastItem = aListOfItems[sizeOfList - 1];
+            aListOfItems.RemoveAt(sizeOfList - 1);
+            
+            string joinedItems = string.Join(", ", aListOfItems);
 
             if (aUseSerialComma)
             {
@@ -25,7 +23,7 @@ namespace MonsterQuest
                 joinedItems += " and " + lastItem;
             }
 
-            aListOfStrings.Add(lastItem);
+            aListOfItems.Add(lastItem);
 
             return joinedItems;
         }

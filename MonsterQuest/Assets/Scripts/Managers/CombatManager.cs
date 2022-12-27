@@ -29,7 +29,7 @@ namespace MonsterQuest
         // Update is called once per frame
         void Update()
         {
-        
+            
         }
 
         public void Simulate(List<string> someHeroes, Enemy anEnemy, ref bool aHeroesAlive)
