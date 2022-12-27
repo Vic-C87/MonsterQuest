@@ -200,6 +200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75087a37f2238d458596c1f394f2e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHeroDamageDice: 2d6
+  myHeroConstitutionDice: d20
+  myHeroConstitution: 3
 --- !u!1 &497185838
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,6 +663,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6181ea2277ddf14e805f5cdfb08a967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myHeroes:
+  - Jazlyn
+  - Theron
+  - Dayana
+  - Rolando
 --- !u!1 &1088585501
 GameObject:
   m_ObjectHideFlags: 0
