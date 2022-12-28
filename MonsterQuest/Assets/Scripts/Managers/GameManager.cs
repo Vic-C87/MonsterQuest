@@ -14,38 +14,59 @@ namespace MonsterQuest
 
         GameState myGameState;
 
+        [SerializeField]
+        Sprite[] myCharacterBodySprites;
+        [SerializeField]
+        Sprite[] myMonsterBodySprites;
+
         Monster myOrc;
         Monster myAzer;
         Monster myTroll;
 
+        CombatPresenter myCombatPresenter;
+
         void Awake()
         {
             myCombatManager = GetComponentInChildren<CombatManager>();
-            myOrc = new Monster("Orc", DiceHelper.Roll("2d8+6"), 10);
-            myAzer = new Monster("Azer", DiceHelper.Roll("6d8+12"), 18);
-            myTroll = new Monster("Troll", DiceHelper.Roll("8d10+40"), 16);
+            myCombatPresenter = GetComponentInChildren<CombatPresenter>();
+            myOrc = new Monster("Orc", myMonsterBodySprites[0],DiceHelper.Roll("2d8+6"), SizeCategory.Medium, 10);
+            myAzer = new Monster("Azer", myMonsterBodySprites[1], DiceHelper.Roll("6d8+12"), SizeCategory.Medium, 18);
+            myTroll = new Monster("Troll", myMonsterBodySprites[2], DiceHelper.Roll("8d10+40"), SizeCategory.Large, 16);
         }
 
-        void Start()
+        IEnumerator Start()
         {
             NewGame();
-            Simulate();
+            yield return Simulate();
         }
         
         void NewGame()
         {
-            Party party = new Party(new Character[] { new Character("Jazlyn"), new Character("Theron"), new Character("Dayana"), new Character("Rolando") });
+            Party party = new Party(new Character[] 
+                {   new Character("Jazlyn", myCharacterBodySprites[0], 10, SizeCategory.Medium), 
+                    new Character("Theron", myCharacterBodySprites[1], 10, SizeCategory.Medium), 
+                    new Character("Dayana", myCharacterBodySprites[2], 10, SizeCategory.Medium), 
+                    new Character("Rolando", myCharacterBodySprites[3], 10, SizeCategory.Medium) 
+                });
             myGameState = new GameState(party);
         }
 
-        void Simulate()
+        IEnumerator Simulate()
         {
+            myCombatPresenter.InitializeParty(myGameState);
+
             myGameState.EnterCombatWithMonster(myOrc);
-            myCombatManager.Simulate(myGameState);
+            myCombatPresenter.InitializeMonster(myGameState);
+            yield return myCombatManager.Simulate(myGameState);
+            
             myGameState.EnterCombatWithMonster(myAzer);
-            myCombatManager.Simulate(myGameState);
+            myCombatPresenter.InitializeMonster(myGameState);
+            yield return myCombatManager.Simulate(myGameState);
+
             myGameState.EnterCombatWithMonster(myTroll);
-            myCombatManager.Simulate(myGameState);
+            myCombatPresenter.InitializeMonster(myGameState);
+            yield return myCombatManager.Simulate(myGameState);
+
             myHeroes = myGameState.myParty.GetNames();
             if (myHeroes.Count > 0)
             {

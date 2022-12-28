@@ -1,12 +1,13 @@
+using UnityEngine;
+
 namespace MonsterQuest
 {
-    public class Character
+    public class Character : Creature
     {
-        public string myDisplayName { get; private set; }
-
-        public Character(string aDisplayName)
+        public Character(string aDisplayName, Sprite aBodySprite, int someHitPointsMaximum, SizeCategory aSizeCategory) 
+            : base(aDisplayName, aBodySprite, someHitPointsMaximum, aSizeCategory)
         {
-            myDisplayName = aDisplayName;
+         
         }
     }
 }

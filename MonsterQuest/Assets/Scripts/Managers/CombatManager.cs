@@ -19,7 +19,7 @@ namespace MonsterQuest
 
         bool myEnemyIsAlive = true;
 
-        public void Simulate(GameState aGameState)
+        public IEnumerator Simulate(GameState aGameState)
         {
             if (aGameState.myParty.Count() > 0)
             {
@@ -37,7 +37,13 @@ namespace MonsterQuest
                             break;
                         }
                         myHeroDamage = DiceHelper.Roll(myHeroDamageDice);
-                        aGameState.myCombat.myMonster.ReactToDamage(myHeroDamage);
+                        yield return aGameState.myParty.myCharacters[i].myPresenter.Attack();
+                        yield return aGameState.myCombat.myMonster.ReactToDamage(myHeroDamage);
+                        if (aGameState.myCombat.myMonster.myHitPoints == 0)
+                        {
+                            myEnemyIsAlive = false;
+                            
+                        }
                         Console.WriteLine(aGameState.myParty.myCharacters[i].myDisplayName + " hits the " + aGameState.myCombat.myMonster.myDisplayName + " for " + myHeroDamage + " damage. " + aGameState.myCombat.myMonster.myDisplayName + " has " + aGameState.myCombat.myMonster.myHitPoints + " HP left.");
                     }
                     if (myEnemyIsAlive)
@@ -45,6 +51,7 @@ namespace MonsterQuest
                         myConstitutionRoll = DiceHelper.Roll(myHeroConstitutionDice) + myHeroConstitution;
                         myHeroIsSaved = myConstitutionRoll >= aGameState.myCombat.myMonster.mySavingThrowDC;
                         int attackedHeroIndex = DiceHelper.GetRandom(aGameState.myParty.Count()) - 1;
+                        yield return aGameState.myCombat.myMonster.myPresenter.Attack();
                         Console.WriteLine("The " + aGameState.myCombat.myMonster.myDisplayName + " attacks " + aGameState.myParty.myCharacters[attackedHeroIndex].myDisplayName + "!");
                         Console.Write(aGameState.myParty.myCharacters[attackedHeroIndex].myDisplayName + " rolls a " + myConstitutionRoll);
 
@@ -55,6 +62,7 @@ namespace MonsterQuest
                         else
                         {
                             Console.WriteLine(" and fails to be saved...");
+                            yield return aGameState.myParty.myCharacters[attackedHeroIndex].ReactToDamage(10);
                             aGameState.myParty.myCharacters.RemoveAt(attackedHeroIndex);
                         }
                     }
