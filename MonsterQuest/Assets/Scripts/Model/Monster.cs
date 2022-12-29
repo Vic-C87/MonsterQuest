@@ -5,12 +5,20 @@ namespace MonsterQuest
 {
     public class Monster : Creature
     {
-        public int mySavingThrowDC { get; private set; }
-
-        public Monster(string aDisplayName, Sprite aBodySprite, int someHitPointsMaximum, SizeCategory aSizeCategory, int aSavingThrowDC) 
-            : base(aDisplayName, aBodySprite, someHitPointsMaximum, aSizeCategory)
+        public MonsterType myType { get; }
+        public Monster(MonsterType aType) 
+            : base(aType.myDisplayName, aType.myBodySprite, aType.mySizeCategory)
         {
-            mySavingThrowDC = aSavingThrowDC;
+            myType = aType;
+            myHitPointsMaximum = DiceHelper.Roll(myType.myHitPointsRoll);
+            Initialize();
+        }
+
+        public string GetRandomWeaponDiceNotation()
+        {
+            int weaponIndex = DiceHelper.GetRandom(myType.myWeaponTypes.Length);
+            weaponIndex--;
+            return myType.myWeaponTypes[weaponIndex].myDamageRoll;
         }
     }
 }

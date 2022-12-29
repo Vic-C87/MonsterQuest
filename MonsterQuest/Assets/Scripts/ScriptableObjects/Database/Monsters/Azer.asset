@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202e4c57de6ae6a4a95c961b1e894e49, type: 3}
+  m_Name: Azer
+  m_EditorClassIdentifier: 
+  myDisplayName: Azer
+  mySizeCategory: 3
+  myAlignment: Lawful Neutral
+  myHitPointsRoll: 6d8+12
+  myWeaponTypes:
+  - {fileID: 11400000, guid: f9e7b36b27e8f61438bdf96c8f174a8e, type: 2}
+  myArmorType: {fileID: 0}
+  myArmorClass: 17
+  myBodySprite: {fileID: 21300000, guid: c4e067472c3b8482c974dac88c53187a, type: 3}

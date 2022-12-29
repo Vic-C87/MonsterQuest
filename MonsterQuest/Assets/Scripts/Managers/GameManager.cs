@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -11,61 +12,64 @@ namespace MonsterQuest
         List<string> myHeroes = new List<string>();
 
         CombatManager myCombatManager;
+        CombatPresenter myCombatPresenter;
 
         GameState myGameState;
 
         [SerializeField]
         Sprite[] myCharacterBodySprites;
         [SerializeField]
-        Sprite[] myMonsterBodySprites;
-
-        Monster myOrc;
-        Monster myAzer;
-        Monster myTroll;
-
-        CombatPresenter myCombatPresenter;
+        MonsterType[] myMonsterTypes;
 
         void Awake()
         {
             myCombatManager = GetComponentInChildren<CombatManager>();
             myCombatPresenter = GetComponentInChildren<CombatPresenter>();
-            myOrc = new Monster("Orc", myMonsterBodySprites[0],DiceHelper.Roll("2d8+6"), SizeCategory.Medium, 10);
-            myAzer = new Monster("Azer", myMonsterBodySprites[1], DiceHelper.Roll("6d8+12"), SizeCategory.Medium, 18);
-            myTroll = new Monster("Troll", myMonsterBodySprites[2], DiceHelper.Roll("8d10+40"), SizeCategory.Large, 16);
+            
         }
 
         IEnumerator Start()
         {
+            yield return Database.Initialize();
             NewGame();
             yield return Simulate();
         }
         
         void NewGame()
         {
+            ArmorType armor = Database.GetItemType<ArmorType>("Studded leather");
+            List<WeaponType> weapons = new List<WeaponType>();
+            ItemType[] items = Database.itemTypes.ToArray<ItemType>();
+            foreach (ItemType item in items)
+            {
+                if (item is WeaponType weapon && item.myWeight > 1)
+                {
+                    weapons.Add(weapon);
+                }
+            }
             Party party = new Party(new Character[] 
-                {   new Character("Jazlyn", myCharacterBodySprites[0], 10, SizeCategory.Medium), 
-                    new Character("Theron", myCharacterBodySprites[1], 10, SizeCategory.Medium), 
-                    new Character("Dayana", myCharacterBodySprites[2], 10, SizeCategory.Medium), 
-                    new Character("Rolando", myCharacterBodySprites[3], 10, SizeCategory.Medium) 
+                {   new Character("Jazlyn", myCharacterBodySprites[0], 10, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor), 
+                    new Character("Theron", myCharacterBodySprites[1], 10, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor), 
+                    new Character("Dayana", myCharacterBodySprites[2], 10, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor), 
+                    new Character("Rolando", myCharacterBodySprites[3], 10, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor) 
                 });
             myGameState = new GameState(party);
+            myMonsterTypes = Database.monsterTypes.ToArray<MonsterType>();
         }
 
         IEnumerator Simulate()
         {
             myCombatPresenter.InitializeParty(myGameState);
 
-            myGameState.EnterCombatWithMonster(myOrc);
-            myCombatPresenter.InitializeMonster(myGameState);
-            yield return myCombatManager.Simulate(myGameState);
-            
-            myGameState.EnterCombatWithMonster(myAzer);
-            myCombatPresenter.InitializeMonster(myGameState);
-            yield return myCombatManager.Simulate(myGameState);
-
-            myGameState.EnterCombatWithMonster(myTroll);
-            myCombatPresenter.InitializeMonster(myGameState);
-            yield return myCombatManager.Simulate(myGameState);
+            for (int i = 0; i < myMonsterTypes.Length; i++)
+            {
+                if (myGameState.myParty.Count() > 0)
+                {
+                    myGameState.EnterCombatWithMonster(new Monster(myMonsterTypes[i]));
+                    myCombatPresenter.InitializeMonster(myGameState);
+                    yield return myCombatManager.Simulate(myGameState);
+                }
+            }
 
             myHeroes = myGameState.myParty.GetNames();
             if (myHeroes.Count > 0)
@@ -79,7 +83,7 @@ namespace MonsterQuest
                 {
                     stillAlive = "es " + StringHelper.JoinWithAnd(myHeroes);
                 }
-                Console.WriteLine("After three grueling battles, the hero" + stillAlive + " return from the dungeons to live another day.");
+                Console.WriteLine("After " + myMonsterTypes.Length + " grueling battles, the hero" + stillAlive + " return from the dungeons to live another day.");
             }
         }
     }

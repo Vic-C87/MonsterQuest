@@ -15,14 +15,18 @@ namespace MonsterQuest
 
         public CreaturePresenter myPresenter { get; protected set; }
 
-        public Creature(string aDisplayName, Sprite aBodySprite,int someHitPointsMaximum, SizeCategory aSizeCategory)
+        public Creature(string aDisplayName, Sprite aBodySprite, SizeCategory aSizeCategory)
         {
             myDisplayName = aDisplayName;
             myBodySprite = aBodySprite;
-            myHitPointsMaximum = someHitPointsMaximum;
             myHitPoints = myHitPointsMaximum;
             mySizeCategory = aSizeCategory;
             mySpaceInFeet = SizeHelper.spaceInFeetPerSizeCategory[mySizeCategory];
+        }
+
+        protected void Initialize()
+        {
+            myHitPoints = myHitPointsMaximum;
         }
 
         public void InitializePresenter(CreaturePresenter aPresenter)
