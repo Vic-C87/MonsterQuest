@@ -59,20 +59,20 @@ namespace MonsterQuest
 
         IEnumerator Simulate()
         {
-            myCombatPresenter.InitializeParty(myGameState);
+            yield return myCombatPresenter.InitializeParty(myGameState);
 
             for (int i = 0; i < myMonsterTypes.Length; i++)
             {
-                if (myGameState.myParty.Count() > 0)
+                if (myGameState.myParty.OneAlive())
                 {
                     myGameState.EnterCombatWithMonster(new Monster(myMonsterTypes[i]));
-                    myCombatPresenter.InitializeMonster(myGameState);
+                    yield return myCombatPresenter.InitializeMonster(myGameState);
                     yield return myCombatManager.Simulate(myGameState);
                 }
             }
 
-            myHeroes = myGameState.myParty.GetNames();
-            if (myHeroes.Count > 0)
+            myHeroes = CheckHeroesAlive();
+            if (myHeroes.Count > 0 && myGameState.myParty.OneAlive())
             {
                 string stillAlive;
                 if (myHeroes.Count == 1)
@@ -85,6 +85,20 @@ namespace MonsterQuest
                 }
                 Console.WriteLine("After " + myMonsterTypes.Length + " grueling battles, the hero" + stillAlive + " return from the dungeons to live another day.");
             }
+        }
+
+        List<string> CheckHeroesAlive()
+        {
+            List<string> heroesAlive = new List<string>();
+            foreach (Character character in myGameState.myParty.myCharacters)
+            {
+                if (character.myLifeStatus != ELifeStatus.Dead)
+                {
+                    heroesAlive.Add(character.myDisplayName);
+                }
+            }
+
+            return heroesAlive;
         }
     }
 }

@@ -22,6 +22,10 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - database
+  - m_GUID: dc73fce54e6d940688e45b6aaa623b23
+    m_Address: Assets/Prefabs/Death saving throw.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0eaca5ffeb7b2c84aad625f787dc9356, type: 2}
   m_SchemaSet:

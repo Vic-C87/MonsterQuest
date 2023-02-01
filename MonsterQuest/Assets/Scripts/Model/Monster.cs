@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace MonsterQuest
@@ -19,6 +20,11 @@ namespace MonsterQuest
             int weaponIndex = DiceHelper.GetRandom(myType.myWeaponTypes.Length);
             weaponIndex--;
             return myType.myWeaponTypes[weaponIndex].myDamageRoll;
+        }
+
+        public override IEnumerator Death(bool aCritical)
+        {
+            yield return base.Death(aCritical);
         }
     }
 }

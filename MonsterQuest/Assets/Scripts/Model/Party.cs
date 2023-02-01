@@ -56,5 +56,20 @@ namespace MonsterQuest
             return names;
         }
 
+        public bool OneAlive()
+        {
+            bool isAlive = false;
+            foreach (Character character in myCharacters)
+            {
+                if (character.myLifeStatus == ELifeStatus.Conscious)
+                {
+                    isAlive = true;
+                    break;
+                }
+            }
+
+            return isAlive;
+        }
+
     }
 }
