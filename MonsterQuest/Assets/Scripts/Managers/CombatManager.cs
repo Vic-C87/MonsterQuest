@@ -6,7 +6,6 @@ namespace MonsterQuest
 {
     public class CombatManager : MonoBehaviour
     {
-        int myDamageDealt;
         bool myEnemyIsAlive = true;
         bool myPartyAlive = true;
 
@@ -16,56 +15,24 @@ namespace MonsterQuest
             {
                 myEnemyIsAlive = true;
 
+                List<Creature> turnList = ShuffleList(aGameState);
+
                 Console.WriteLine("The heroes " + StringHelper.JoinWithAnd(aGameState.myParty.GetNames()) + " descend into the dungeon.");
                 Console.WriteLine(aGameState.myCombat.myMonster.myDisplayName + " with " + aGameState.myCombat.myMonster.myHitPoints + " HP appears!");
-                while (aGameState.myCombat.myMonster.myHitPoints > 0 && aGameState.myParty.Count() > 0 && myPartyAlive)
+                
+                while (myEnemyIsAlive && myPartyAlive)
                 {
-                    myPartyAlive = false;
-                    for (int i = 0; i < aGameState.myParty.Count(); i++)
+                    for (int i = 0; i < turnList.Count; i++)
                     {
-                        if (aGameState.myCombat.myMonster.myHitPoints == 0)
+                        if (turnList[i].myLifeStatus == ELifeStatus.Dead) continue;
+
+                        yield return turnList[i].Taketurn(aGameState).Execute();
+                            
+                        if (aGameState.myCombat.myMonster.myHitPoints <= 0)
                         {
                             myEnemyIsAlive = false;
                             break;
                         }
-
-                        if (aGameState.myParty.myCharacters[i].myLifeStatus == ELifeStatus.Dead)
-                        {
-                            continue;
-                        }
-
-                        if (aGameState.myParty.myCharacters[i].myLifeStatus == ELifeStatus.Conscious)
-                        {
-                            myDamageDealt = DiceHelper.Roll(aGameState.myParty.myCharacters[i].myWeaponType.myDamageRoll);
-                            yield return aGameState.myParty.myCharacters[i].myPresenter.Attack();
-                            yield return aGameState.myCombat.myMonster.ReactToDamage(myDamageDealt);
-                            Console.WriteLine(aGameState.myParty.myCharacters[i].myDisplayName + " hits the " + aGameState.myCombat.myMonster.myDisplayName + " with " + aGameState.myParty.myCharacters[i].myWeaponType.myDisplayName + " for " + myDamageDealt + " damage. " + aGameState.myCombat.myMonster.myDisplayName + " has " + aGameState.myCombat.myMonster.myHitPoints + " HP left.");
-                            if (aGameState.myCombat.myMonster.myHitPoints == 0)
-                            {
-                                myEnemyIsAlive = false;
-                            }
-                        }
-                        else
-                        {
-                            int roll = DiceHelper.Roll("d20");
-                            Console.WriteLine(aGameState.myParty.myCharacters[i].myDisplayName + " is unconscious and has to perform a seath saving roll: " + roll);
-                            yield return aGameState.myParty.myCharacters[i].DeathSavingThrow(roll);
-                     
-                            if (aGameState.myParty.myCharacters[i].myLifeStatus == ELifeStatus.Conscious)
-                            {
-                                Console.WriteLine(aGameState.myParty.myCharacters[i].myDisplayName + " regains consciousness!");
-                            }
-                        }
-                    }
-
-                    if (myEnemyIsAlive && aGameState.myParty.OneAlive())
-                    {
-                        int attackedHeroIndex = GetAttackIndex(aGameState);
-                        int randomWeaponIndex = DiceHelper.GetRandom(aGameState.myCombat.myMonster.myType.myWeaponTypes.Length) - 1;
-                        myDamageDealt = DiceHelper.Roll(aGameState.myCombat.myMonster.myType.myWeaponTypes[randomWeaponIndex].myDamageRoll);
-                        yield return aGameState.myCombat.myMonster.myPresenter.Attack();
-                        yield return aGameState.myParty.myCharacters[attackedHeroIndex].ReactToDamage(myDamageDealt);
-                        Console.WriteLine("The " + aGameState.myCombat.myMonster.myDisplayName + " attacks " + aGameState.myParty.myCharacters[attackedHeroIndex].myDisplayName + " with " + aGameState.myCombat.myMonster.myType.myWeaponTypes[randomWeaponIndex].myDisplayName + " dealing " + myDamageDealt + " damage. " + aGameState.myParty.myCharacters[attackedHeroIndex].myDisplayName + " has " + aGameState.myParty.myCharacters[attackedHeroIndex].myHitPoints + " HP left.");
                     }
 
                     myPartyAlive = aGameState.myParty.OneAlive();
@@ -81,20 +48,32 @@ namespace MonsterQuest
             }
         }
 
-        int GetAttackIndex(GameState aGameState)
+        List<Creature> ShuffleList(GameState aGameState)
         {
-            bool isAlive = false;
-            int attackedHeroIndex;
-            do
+            List<Creature> turnList = new List<Creature>();
+            foreach (Creature character in aGameState.myParty.myCharacters)
             {
-                attackedHeroIndex = DiceHelper.GetRandom(aGameState.myParty.Count()) - 1;
-                if (aGameState.myParty.myCharacters[attackedHeroIndex].myLifeStatus != ELifeStatus.Dead)
-                {
-                    isAlive = true;
-                }
+                turnList.Add(character);
+            }
+            turnList.Add(aGameState.myCombat.myMonster);
 
-            } while (!isAlive);
-            return attackedHeroIndex;
+            List<Creature> shuffledList = new List<Creature>(turnList);
+            System.Random random = new System.Random();
+            int count = shuffledList.Count;
+            int randomItem;
+            Creature itemPicked;
+
+            for (int i = count; i > 1; i--)
+            {
+                randomItem = random.Next(count);
+
+                itemPicked = shuffledList[randomItem];
+                shuffledList.RemoveAt(randomItem);
+                shuffledList.Add(itemPicked);
+
+            }
+            return shuffledList;
+
         }
     }
 }

@@ -24,7 +24,7 @@ namespace MonsterQuest
 
         public bool RemoveAt(int anIndexToRemove)
         {
-            if (anIndexToRemove < Count())
+            if (anIndexToRemove < myCharacters.Count)
             {
                 myCharacters.RemoveAt(anIndexToRemove);
                 return true;
@@ -34,7 +34,15 @@ namespace MonsterQuest
 
         public int Count()
         {
-            return myCharacters.Count;
+            int count = 0;
+            foreach(Character aCharacter in myCharacters)
+            {
+                if (aCharacter.myLifeStatus == ELifeStatus.Conscious)
+                {
+                    count += 1;
+                }
+            }
+            return count;
         }
 
         public bool IsEmpty()

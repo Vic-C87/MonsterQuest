@@ -22,3 +22,22 @@ MonoBehaviour:
   myArmorType: {fileID: 0}
   myArmorClass: 15
   myBodySprite: {fileID: 21300000, guid: f1fa343faea49484d895a671f5ea4a29, type: 3}
+  myAbilityScores:
+    <Strength>k__BackingField:
+      <Score>k__BackingField: 18
+      <Modifier>k__BackingField: 4
+    <Dexterity>k__BackingField:
+      <Score>k__BackingField: 13
+      <Modifier>k__BackingField: 1
+    <Constitution>k__BackingField:
+      <Score>k__BackingField: 20
+      <Modifier>k__BackingField: 5
+    <Intelligence>k__BackingField:
+      <Score>k__BackingField: 7
+      <Modifier>k__BackingField: -2
+    <Wisdom>k__BackingField:
+      <Score>k__BackingField: 9
+      <Modifier>k__BackingField: -1
+    <Charisma>k__BackingField:
+      <Score>k__BackingField: 7
+      <Modifier>k__BackingField: -2

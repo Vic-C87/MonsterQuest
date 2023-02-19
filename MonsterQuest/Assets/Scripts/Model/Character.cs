@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MonsterQuest
@@ -8,6 +9,14 @@ namespace MonsterQuest
     {
         public WeaponType myWeaponType { get; private set; }
         public ArmorType myArmorType { get; private set; }
+
+        public override IEnumerable myDeathSavingThrows { get { return myDeathSavingThrowsList; } }
+
+        List<bool> myDeathSavingThrowsList = new List<bool>();
+
+        public override int myArmorClass => base.myArmorClass;
+
+
         public Character(string aDisplayName, Sprite aBodySprite, int someHitPointsMaximum, SizeCategory aSizeCategory, WeaponType aWeaponType, ArmorType anArmorType) 
             : base(aDisplayName, aBodySprite, aSizeCategory)
         {
@@ -15,6 +24,44 @@ namespace MonsterQuest
             myWeaponType = aWeaponType;
             myArmorType = anArmorType;
             Initialize();
+        }
+
+        public override IAction Taketurn(GameState aGameState)
+        {
+            if (myLifeStatus == ELifeStatus.Conscious)
+                return new AttackAction(this, aGameState.myCombat.myMonster, myWeaponType);
+            else
+                return new BeUnconsciousAction(this);
+        }
+
+        public override IEnumerator ReactToDamage(int aDamageAmount, bool aCriticalHit = false)
+        {
+            bool criticalDeath = false;
+            if (aDamageAmount >= myHitPoints + myHitPointsMaximum)
+            {
+                criticalDeath = true;
+            }
+            if (myLifeStatus == ELifeStatus.Conscious)
+            {
+                myHitPoints = Math.Max(0, myHitPoints - aDamageAmount);
+                if (myHitPoints == 0)
+                {
+                    yield return Death(criticalDeath);
+                }
+                else
+                {
+                    yield return myPresenter.TakeDamage();
+                }
+            }
+            else
+            {
+                yield return myPresenter.TakeDamage();
+                yield return AddFailure();
+                if (criticalDeath)
+                {
+                    yield return AddFailure();
+                }
+            }
         }
 
         public override IEnumerator Death(bool aCritical)
@@ -48,6 +95,50 @@ namespace MonsterQuest
             {
                 yield return AddFailure(aRoll);
                 Console.WriteLine("Failure!" + myDisplayName + " has a total of " + myDeathSavingThrowFailures + " failed rolls.");
+            }
+        }
+
+        protected IEnumerator AddFailure(int? aRoll = null)
+        {
+            if (myLifeStatus != ELifeStatus.Dead)
+            {
+                myDeathSavingThrowsList.Add(false);
+                myDeathSavingThrowFailures++;
+                yield return myPresenter.PerformDeathSavingThrow(false, aRoll);
+                if (myDeathSavingThrowFailures >= 3)
+                {
+                    myLifeStatus = ELifeStatus.Dead;
+                    myPresenter.UpdateStableStatus();
+                    yield return myPresenter.Die();
+                }
+                if (aRoll == 1)
+                {
+                    yield return AddFailure();
+                }
+            }
+        }
+
+        protected IEnumerator AddSuccess(int aRoll)
+        {
+            myDeathSavingThrowsList.Add(true);
+            myDeathSavingThrowSucceeses++;
+            yield return myPresenter.PerformDeathSavingThrow(true, aRoll);
+            if (aRoll == 20)
+            {
+                int amountToHeal = 1;  
+                yield return Heal(amountToHeal);
+            }
+
+            if (myDeathSavingThrowSucceeses >= 3)
+            {
+                myDeathSavingThrowSucceeses = 0;
+                myDeathSavingThrowFailures = 0;
+                myPresenter.ResetDeathSavingThrows();
+                myDeathSavingThrowsList.Clear();
+                myLifeStatus = ELifeStatus.Conscious;
+                myHitPoints++;
+                myPresenter.UpdateStableStatus();
+                yield return myPresenter.RegainConsciousness();
             }
         }
     }

@@ -5,12 +5,15 @@ using UnityEngine;
 
 namespace MonsterQuest
 {
-    public class Creature
+    public abstract class Creature
     {
         public string myDisplayName { get; protected set; }
         public Sprite myBodySprite { get; protected set; }
         public int myHitPointsMaximum { get; protected set; }
         public int myHitPoints { get; protected set; }
+
+        public virtual int myArmorClass { get; }
+
         public SizeCategory mySizeCategory { get; protected set; }
         public float mySpaceInFeet { get; }
 
@@ -18,12 +21,11 @@ namespace MonsterQuest
 
         public ELifeStatus myLifeStatus { get; protected set; }
 
-        public List<bool> myDeathSavingThrows { get; } = new List<bool>();
+        public abstract IEnumerable myDeathSavingThrows { get; }
 
-        public int myDeathSavingThrowFailures { get; private set; }
+        public int myDeathSavingThrowFailures { get; protected set; }
 
-        public int myDeathSavingThrowSucceeses { get; private set; }
-
+        public int myDeathSavingThrowSucceeses { get; protected set; }
 
         public Creature(string aDisplayName, Sprite aBodySprite, SizeCategory aSizeCategory)
         {
@@ -45,77 +47,9 @@ namespace MonsterQuest
             myPresenter = aPresenter;
         }
 
-        public virtual IEnumerator ReactToDamage(int aDamageAmount)
-        {
-            bool criticalDeath = false;
-            if (aDamageAmount >= myHitPoints + myHitPointsMaximum)
-            {
-                criticalDeath = true;
-            }
-            if (myLifeStatus == ELifeStatus.Conscious)
-            {
-                myHitPoints = Math.Max(0, myHitPoints - aDamageAmount);
-                if(myHitPoints == 0)
-                {
-                    yield return Death(criticalDeath);
-                }
-                else
-                {
-                    yield return myPresenter.TakeDamage();
-                }
-            }
-            else
-            {
-                yield return myPresenter.TakeDamage();
-                yield return AddFailure();
-                if (criticalDeath)
-                {
-                    yield return AddFailure();
-                }
-            }
-        }
+        public abstract IEnumerator ReactToDamage(int aDamageAmount, bool aCriticalHit = false);
 
-        protected IEnumerator AddFailure(int? aRoll = null)
-        {
-            if (myLifeStatus != ELifeStatus.Dead)
-            {
-                myDeathSavingThrows.Add(false);
-                myDeathSavingThrowFailures++;
-                yield return myPresenter.PerformDeathSavingThrow(false, aRoll);
-                if (myDeathSavingThrowFailures >= 3)
-                {
-                    myLifeStatus = ELifeStatus.Dead;
-                    myPresenter.UpdateStableStatus();
-                    yield return myPresenter.Die();
-                }
-                if (aRoll == 1)
-                {
-                    yield return AddFailure();
-                }
-            }
-        }
-
-        protected IEnumerator AddSuccess(int aRoll)
-        {
-            myDeathSavingThrows.Add(true);
-            myDeathSavingThrowSucceeses++;
-            yield return myPresenter.PerformDeathSavingThrow(true, aRoll);
-            if (aRoll == 20)
-            {
-                myHitPoints++;
-            }
-
-            if (myDeathSavingThrowSucceeses >= 3)
-            {
-                myDeathSavingThrowSucceeses = 0;
-                myDeathSavingThrowFailures = 0;
-                myPresenter.ResetDeathSavingThrows();
-                myLifeStatus = ELifeStatus.Conscious;
-                myHitPoints++;
-                myPresenter.UpdateStableStatus();
-                yield return myPresenter.RegainConsciousness();
-            }
-        }
+        public abstract IAction Taketurn(GameState aGameState);
 
         public virtual IEnumerator Death(bool aCritical)
         {
@@ -125,6 +59,10 @@ namespace MonsterQuest
             yield return myPresenter.Die();
         }
 
-
+        public IEnumerator Heal(int anAmount)
+        {
+            myHitPoints = Mathf.Min(myHitPoints + anAmount, myHitPointsMaximum);
+            yield return myPresenter.Heal();
+        }
     }
 }
