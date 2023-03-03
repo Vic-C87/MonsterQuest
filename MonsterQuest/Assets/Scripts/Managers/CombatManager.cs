@@ -15,10 +15,17 @@ namespace MonsterQuest
             {
                 myEnemyIsAlive = true;
 
-                List<Creature> turnList = ShuffleList(aGameState);
+                List<Creature> turnList = new List<Creature>();
+                foreach (Creature character in aGameState.myParty.myCharacters)
+                {
+                    turnList.Add(character);
+                }
+                turnList.Add(aGameState.myCombat.myMonster);
+
+                turnList.ShuffleList();
 
                 Console.WriteLine("The heroes " + StringHelper.JoinWithAnd(aGameState.myParty.GetNames()) + " descend into the dungeon.");
-                Console.WriteLine(aGameState.myCombat.myMonster.myDisplayName + " with " + aGameState.myCombat.myMonster.myHitPoints + " HP appears!");
+                Console.WriteLine(aGameState.myCombat.myMonster.myDisplayName.ToUpperFirst() + " with " + aGameState.myCombat.myMonster.myHitPoints + " HP appears!");
                 
                 while (myEnemyIsAlive && myPartyAlive)
                 {
@@ -46,19 +53,6 @@ namespace MonsterQuest
                     Console.WriteLine("The party has failed and the " + aGameState.myCombat.myMonster.myDisplayName + " continues to attack unsuspecting adventurers.");
                 }
             }
-        }
-
-        List<Creature> ShuffleList(GameState aGameState)
-        {
-            List<Creature> turnList = new List<Creature>();
-            foreach (Creature character in aGameState.myParty.myCharacters)
-            {
-                turnList.Add(character);
-            }
-            turnList.Add(aGameState.myCombat.myMonster);
-
-            return ListHelper<Creature>.ShuffleList(turnList);
-
         }
     }
 }

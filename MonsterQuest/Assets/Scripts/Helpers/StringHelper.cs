@@ -27,5 +27,18 @@ namespace MonsterQuest
 
             return joinedItems;
         }
+
+        public static string ToUpperFirst(this string aString)
+        {
+            string stringToReturn = "";
+            stringToReturn += aString[0];
+            stringToReturn = stringToReturn.ToUpper();
+            for (int i = 1; i < aString.Length; i++)
+            {
+                stringToReturn += aString[i];
+            }
+            
+            return stringToReturn;
+        }
     }
 }

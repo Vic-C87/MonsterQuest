@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202e4c57de6ae6a4a95c961b1e894e49, type: 3}
   m_Name: Azer
   m_EditorClassIdentifier: 
-  myDisplayName: Azer
+  myDisplayName: azer
   mySizeCategory: 3
   myAlignment: Lawful Neutral
   myHitPointsRoll: 6d8+12
@@ -24,19 +24,13 @@ MonoBehaviour:
   myAbilityScores:
     <Strength>k__BackingField:
       <Score>k__BackingField: 17
-      <Modifier>k__BackingField: 3
     <Dexterity>k__BackingField:
       <Score>k__BackingField: 12
-      <Modifier>k__BackingField: 1
     <Constitution>k__BackingField:
       <Score>k__BackingField: 15
-      <Modifier>k__BackingField: 2
     <Intelligence>k__BackingField:
       <Score>k__BackingField: 12
-      <Modifier>k__BackingField: 1
     <Wisdom>k__BackingField:
       <Score>k__BackingField: 13
-      <Modifier>k__BackingField: 1
     <Charisma>k__BackingField:
       <Score>k__BackingField: 10
-      <Modifier>k__BackingField: 0

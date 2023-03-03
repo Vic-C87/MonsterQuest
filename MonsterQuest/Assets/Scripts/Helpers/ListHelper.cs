@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace MonsterQuest
 {
-    public static class ListHelper<T>
+    public static class ListHelper
     {
-        public static List<T> ShuffleList(IList<T> aTurnList)
+        public static void ShuffleList<T>(this IList<T> aTurnList) 
         {
             List<T> shuffledList = new List<T>(aTurnList);
             System.Random random = new System.Random();
-            int count = shuffledList.Count;
+            int count = aTurnList.Count;
             int randomItem;
             T itemPicked;
 
@@ -17,13 +17,11 @@ namespace MonsterQuest
             {
                 randomItem = random.Next(count);
 
-                itemPicked = shuffledList[randomItem];
-                shuffledList.RemoveAt(randomItem);
-                shuffledList.Add(itemPicked);
+                itemPicked = aTurnList[randomItem];
+                aTurnList.RemoveAt(randomItem);
+                aTurnList.Add(itemPicked);
 
             }
-            return shuffledList;
-
         }
     }
 }

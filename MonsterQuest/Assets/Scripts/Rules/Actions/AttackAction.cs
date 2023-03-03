@@ -48,19 +48,19 @@ namespace MonsterQuest
                     bool critical = attackRoll == 20;
                     yield return myAttacker.myPresenter.Attack();
                     yield return myTarget.ReactToDamage(damage, critical);
-                    Console.WriteLine(myAttacker.myDisplayName + " hits " + myTarget.myDisplayName + " with " + myWeaponType.myDisplayName + " for " + damage + " damage. " + myTarget.myDisplayName + " has " + myTarget.myHitPoints + " HP left.");
+                    Console.WriteLine(myAttacker.myDisplayName.ToUpperFirst() + " hits " + myTarget.myDisplayName + " with " + myWeaponType.myDisplayName + " for " + damage + " damage. " + myTarget.myDisplayName.ToUpperFirst() + " has " + myTarget.myHitPoints + " HP left.");
                 }
                 else
                 {
                     yield return myAttacker.myPresenter.Attack();
-                    Console.WriteLine(myAttacker.myDisplayName + " misses!");
+                    Console.WriteLine(myAttacker.myDisplayName.ToUpperFirst() + " misses!");
                 }
             }
             else
             {
                 yield return myAttacker.myPresenter.Attack();
                 yield return myTarget.ReactToDamage(0, true);
-                Console.WriteLine(myTarget.myDisplayName + " is unconscious and the attack is therefore a critical hit!");
+                Console.WriteLine(myTarget.myDisplayName.ToUpperFirst() + " is unconscious and the attack is therefore a critical hit!");
             }
         }
     }

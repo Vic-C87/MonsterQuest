@@ -55,7 +55,7 @@ namespace MonsterQuest
                 }
                 attackedHeroIndex = lowestIndex;
             }
-            WeaponType weapon = GetRandomWeapon();
+            WeaponType weapon = myType.myWeaponTypes.Random();
             EAbility? ability = null;
 
             if (weapon.myIsFinesse)
@@ -93,9 +93,7 @@ namespace MonsterQuest
 
         WeaponType GetRandomWeapon()
         {
-            int weaponIndex = DiceHelper.GetRandom(myType.myWeaponTypes.Length);
-            weaponIndex--;
-            return myType.myWeaponTypes[weaponIndex];
+            return myType.myWeaponTypes.Random();
         }
 
         public override IEnumerator Death(bool aCritical)

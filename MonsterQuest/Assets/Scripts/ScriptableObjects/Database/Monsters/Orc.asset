@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202e4c57de6ae6a4a95c961b1e894e49, type: 3}
   m_Name: Orc
   m_EditorClassIdentifier: 
-  myDisplayName: Orc
+  myDisplayName: orc
   mySizeCategory: 3
   myAlignment: Chaotic Evil
   myHitPointsRoll: 2d8+6
@@ -25,19 +25,13 @@ MonoBehaviour:
   myAbilityScores:
     <Strength>k__BackingField:
       <Score>k__BackingField: 16
-      <Modifier>k__BackingField: 3
     <Dexterity>k__BackingField:
       <Score>k__BackingField: 12
-      <Modifier>k__BackingField: 1
     <Constitution>k__BackingField:
       <Score>k__BackingField: 16
-      <Modifier>k__BackingField: 3
     <Intelligence>k__BackingField:
       <Score>k__BackingField: 7
-      <Modifier>k__BackingField: -2
     <Wisdom>k__BackingField:
       <Score>k__BackingField: 11
-      <Modifier>k__BackingField: 0
     <Charisma>k__BackingField:
       <Score>k__BackingField: 10
-      <Modifier>k__BackingField: 0
