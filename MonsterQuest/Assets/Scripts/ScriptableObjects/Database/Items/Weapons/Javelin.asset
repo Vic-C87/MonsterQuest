@@ -15,3 +15,5 @@ MonoBehaviour:
   myDisplayName: Javelin
   myWeight: 2
   myDamageRoll: 1d6
+  myIsRanged: 1
+  myIsFinesse: 0

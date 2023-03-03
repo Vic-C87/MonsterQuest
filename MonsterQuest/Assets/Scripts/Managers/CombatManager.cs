@@ -57,22 +57,7 @@ namespace MonsterQuest
             }
             turnList.Add(aGameState.myCombat.myMonster);
 
-            List<Creature> shuffledList = new List<Creature>(turnList);
-            System.Random random = new System.Random();
-            int count = shuffledList.Count;
-            int randomItem;
-            Creature itemPicked;
-
-            for (int i = count; i > 1; i--)
-            {
-                randomItem = random.Next(count);
-
-                itemPicked = shuffledList[randomItem];
-                shuffledList.RemoveAt(randomItem);
-                shuffledList.Add(itemPicked);
-
-            }
-            return shuffledList;
+            return ListHelper<Creature>.ShuffleList(turnList);
 
         }
     }

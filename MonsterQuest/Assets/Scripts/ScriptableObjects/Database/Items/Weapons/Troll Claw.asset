@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myDisplayName: Troll Claw
   myWeight: 0
-  myDamageRoll: 2d6+4
+  myDamageRoll: 2d6

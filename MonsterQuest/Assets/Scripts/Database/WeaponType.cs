@@ -8,5 +8,7 @@ namespace MonsterQuest
     public class WeaponType : ItemType
     {
         public string myDamageRoll;
+        public bool myIsRanged;
+        public bool myIsFinesse;
     }
 }

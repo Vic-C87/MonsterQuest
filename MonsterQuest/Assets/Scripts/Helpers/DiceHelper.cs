@@ -45,6 +45,26 @@ namespace MonsterQuest
             return result;
         }
 
+        public static int RollAbilityScore()
+        {
+            int score = 0;
+            int lowest = 7;
+
+            for (int i = 0; i < 4; i++)
+            {
+                int roll = GetRandom(6);
+                score += roll;
+                if (roll < lowest)
+                {
+                    lowest = roll;
+                }
+            }
+
+            score -= lowest;
+
+            return score;
+        }
+
         public static int GetRandom(int max)
         {
             int result;

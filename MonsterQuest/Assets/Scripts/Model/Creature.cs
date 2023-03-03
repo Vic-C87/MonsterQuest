@@ -27,6 +27,8 @@ namespace MonsterQuest
 
         public int myDeathSavingThrowSucceeses { get; protected set; }
 
+        public abstract AbilityScores myAbilityScores { get; }
+
         public Creature(string aDisplayName, Sprite aBodySprite, SizeCategory aSizeCategory)
         {
             myDisplayName = aDisplayName;

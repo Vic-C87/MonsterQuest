@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 368fd830b6ae1be41a60669f4b6b3f86, type: 3}
-  m_Name: Troll Bite
+  m_Name: Rapier
   m_EditorClassIdentifier: 
-  myDisplayName: Troll Bite
-  myWeight: 0
-  myDamageRoll: 1d6
+  myDisplayName: Rapier
+  myWeight: 2
+  myDamageRoll: 1d8
+  myIsRanged: 0
+  myIsFinesse: 1

@@ -15,3 +15,5 @@ MonoBehaviour:
   myDisplayName: Dagger
   myWeight: 1
   myDamageRoll: 1d4
+  myIsRanged: 0
+  myIsFinesse: 1

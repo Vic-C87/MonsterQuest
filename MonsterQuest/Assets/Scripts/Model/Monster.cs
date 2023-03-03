@@ -14,6 +14,8 @@ namespace MonsterQuest
 
         public override int myArmorClass => base.myArmorClass;
 
+        public override AbilityScores myAbilityScores => myType.myAbilityScores;
+
         public Monster(MonsterType aType) 
             : base(aType.myDisplayName, aType.myBodySprite, aType.mySizeCategory)
         {
@@ -26,17 +28,42 @@ namespace MonsterQuest
         {
             bool isAlive = false;
             int attackedHeroIndex;
-            do
+            if (myAbilityScores[EAbility.Intelligence] < 7)
             {
-                attackedHeroIndex = DiceHelper.GetRandom(aGameState.myParty.myCharacters.Count) - 1;
-                if (aGameState.myParty.myCharacters[attackedHeroIndex].myLifeStatus != ELifeStatus.Dead)
+                do
                 {
-                    isAlive = true;
+                    attackedHeroIndex = DiceHelper.GetRandom(aGameState.myParty.myCharacters.Count) - 1;
+                    if (aGameState.myParty.myCharacters[attackedHeroIndex].myLifeStatus != ELifeStatus.Dead)
+                    {
+                        isAlive = true;
+                    }
+
+                } while (!isAlive);
+            }
+            else
+            {
+                int lowestIndex = 0;
+                int lowestHP = int.MaxValue;
+
+                for (int i = 0; i < aGameState.myParty.myCharacters.Count; i++)
+                {
+                    if(aGameState.myParty.myCharacters[i].myLifeStatus != ELifeStatus.Dead && aGameState.myParty.myCharacters[i].myHitPoints < lowestHP)
+                    {
+                        lowestHP = aGameState.myParty.myCharacters[i].myHitPoints;
+                        lowestIndex = i;
+                    }
                 }
+                attackedHeroIndex = lowestIndex;
+            }
+            WeaponType weapon = GetRandomWeapon();
+            EAbility? ability = null;
 
-            } while (!isAlive);
+            if (weapon.myIsFinesse)
+            {
+                ability = myAbilityScores[EAbility.Strenght] > myAbilityScores[EAbility.Dexterity] ? EAbility.Strenght : EAbility.Dexterity;
+            }
 
-            return new AttackAction(this, aGameState.myParty.myCharacters[attackedHeroIndex], GetRandomWeapon());
+            return new AttackAction(this, aGameState.myParty.myCharacters[attackedHeroIndex], weapon, ability);
         }
 
         public override IEnumerator ReactToDamage(int aDamageAmount, bool aCriticalHit = false)

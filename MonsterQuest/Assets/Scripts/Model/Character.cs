@@ -16,6 +16,7 @@ namespace MonsterQuest
 
         public override int myArmorClass => base.myArmorClass;
 
+        public override AbilityScores myAbilityScores { get; }
 
         public Character(string aDisplayName, Sprite aBodySprite, int someHitPointsMaximum, SizeCategory aSizeCategory, WeaponType aWeaponType, ArmorType anArmorType) 
             : base(aDisplayName, aBodySprite, aSizeCategory)
@@ -23,15 +24,25 @@ namespace MonsterQuest
             myHitPointsMaximum = someHitPointsMaximum;
             myWeaponType = aWeaponType;
             myArmorType = anArmorType;
+            myAbilityScores = new (true);
             Initialize();
         }
 
         public override IAction Taketurn(GameState aGameState)
         {
             if (myLifeStatus == ELifeStatus.Conscious)
-                return new AttackAction(this, aGameState.myCombat.myMonster, myWeaponType);
+            {
+                EAbility? ability = null;
+                if (myWeaponType.myIsFinesse)
+                {
+                    ability = myAbilityScores[EAbility.Strenght] > myAbilityScores[EAbility.Dexterity] ? EAbility.Strenght : EAbility.Dexterity;
+                }
+                return new AttackAction(this, aGameState.myCombat.myMonster, myWeaponType, ability);
+            }
             else
+            {
                 return new BeUnconsciousAction(this);
+            }
         }
 
         public override IEnumerator ReactToDamage(int aDamageAmount, bool aCriticalHit = false)
