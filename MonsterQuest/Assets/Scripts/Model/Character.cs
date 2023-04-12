@@ -35,7 +35,7 @@ namespace MonsterQuest
                 EAbility? ability = null;
                 if (myWeaponType.myIsFinesse)
                 {
-                    ability = myAbilityScores[EAbility.Strenght] > myAbilityScores[EAbility.Dexterity] ? EAbility.Strenght : EAbility.Dexterity;
+                    ability = myAbilityScores[EAbility.Strength] > myAbilityScores[EAbility.Dexterity] ? EAbility.Strength : EAbility.Dexterity;
                 }
                 return new AttackAction(this, aGameState.myCombat.myMonster, myWeaponType, ability);
             }

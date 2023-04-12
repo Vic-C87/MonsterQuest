@@ -4,7 +4,7 @@ namespace MonsterQuest
     public enum EAbility 
     {
         None,
-        Strenght,
+        Strength,
         Dexterity,
         Constitution,
         Intelligence,

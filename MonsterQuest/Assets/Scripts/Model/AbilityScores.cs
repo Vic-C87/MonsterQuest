@@ -41,7 +41,7 @@ namespace MonsterQuest
                 {
                     case EAbility.None:
                         return null;
-                    case EAbility.Strenght:
+                    case EAbility.Strength:
                         return Strength;
                     case EAbility.Dexterity:
                         return Dexterity;

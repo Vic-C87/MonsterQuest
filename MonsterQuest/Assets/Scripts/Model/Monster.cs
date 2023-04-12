@@ -60,7 +60,7 @@ namespace MonsterQuest
 
             if (weapon.myIsFinesse)
             {
-                ability = myAbilityScores[EAbility.Strenght] > myAbilityScores[EAbility.Dexterity] ? EAbility.Strenght : EAbility.Dexterity;
+                ability = myAbilityScores[EAbility.Strength] > myAbilityScores[EAbility.Dexterity] ? EAbility.Strength : EAbility.Dexterity;
             }
 
             return new AttackAction(this, aGameState.myParty.myCharacters[attackedHeroIndex], weapon, ability);

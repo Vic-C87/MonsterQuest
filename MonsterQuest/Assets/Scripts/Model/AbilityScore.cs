@@ -9,6 +9,7 @@ namespace MonsterQuest
         [field: SerializeField]
         public int Score { get; set; }
 
+        [property: SerializeField]
         public int Modifier 
         { 
             get 

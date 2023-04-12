@@ -35,7 +35,7 @@ namespace MonsterQuest
             }
             else
             {
-                modifier = myAttacker.myAbilityScores[EAbility.Strenght].Modifier;
+                modifier = myAttacker.myAbilityScores[EAbility.Strength].Modifier;
             }
             int attackRoll = DiceHelper.Roll("d20") + modifier;
             int damage;
