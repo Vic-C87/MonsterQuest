@@ -23,7 +23,7 @@ namespace MonsterQuest
 
         public IEnumerator InitializeMonster(GameState gameState)
         {
-            yield return InitializeCreatures(new Creature[]{gameState.myCombat.myMonster}, 0, CardinalDirection.North);
+            yield return InitializeCreatures(new Creature[]{gameState.myCombat.Monster}, 0, CardinalDirection.North);
         }
 
         private IEnumerator InitializeCreatures(IEnumerable<Creature> creatures, float y, CardinalDirection direction)

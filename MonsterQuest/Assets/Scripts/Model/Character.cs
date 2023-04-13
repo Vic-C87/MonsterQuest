@@ -37,7 +37,7 @@ namespace MonsterQuest
                 {
                     ability = myAbilityScores[EAbility.Strength] > myAbilityScores[EAbility.Dexterity] ? EAbility.Strength : EAbility.Dexterity;
                 }
-                return new AttackAction(this, aGameState.myCombat.myMonster, myWeaponType, ability);
+                return new AttackAction(this, aGameState.myCombat.Monster, myWeaponType, ability);
             }
             else
             {

@@ -5,11 +5,39 @@ namespace MonsterQuest
 {
     public class Combat
     {
-        public Monster myMonster { get; private set; }
+        public Monster Monster { get; private set; }
 
-        public Combat(Monster aMonster)
+        List<Creature> myCreaturesInOrderOfInitiative;
+        int myCurrentCreatureIndex;
+
+        public Combat(Monster aMonster, GameState aGameState)
         {
-            myMonster = aMonster;
+            Monster = aMonster;            
+
+            myCreaturesInOrderOfInitiative= new List<Creature>();
+            foreach(Creature creature in aGameState.myParty.myCharacters) 
+            {
+                myCreaturesInOrderOfInitiative.Add(creature);
+            }
+
+            myCreaturesInOrderOfInitiative.Add(aMonster);
+
+            ListHelper.SortByRoll(myCreaturesInOrderOfInitiative);
+
+            myCurrentCreatureIndex = -1;
+        }
+
+        public Creature StartNextCreatureTurn()
+        {
+            myCurrentCreatureIndex++;
+
+            if (myCurrentCreatureIndex >= myCreaturesInOrderOfInitiative.Count)
+            {
+                myCurrentCreatureIndex = 0;
+            }
+
+            return myCreaturesInOrderOfInitiative[myCurrentCreatureIndex];
+
         }
     }
 }

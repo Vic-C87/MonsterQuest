@@ -10,29 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 202e4c57de6ae6a4a95c961b1e894e49, type: 3}
-  m_Name: DragonTurtle
+  m_Name: Mage
   m_EditorClassIdentifier: 
-  myDisplayName: Dragon Turtle
-  mySizeCategory: 6
-  myAlignment: neutral
-  myHitPointsRoll: 22d20+110
+  myDisplayName: Mage
+  mySizeCategory: 3
+  myAlignment: any alignment
+  myHitPointsRoll: 9d8
   myWeaponTypes:
-  - {fileID: 11400000, guid: 74b808a7e91db904cb24ee6c55f329e2, type: 2}
-  - {fileID: 11400000, guid: e3b3700d11ef1284ca835c6036f9c1d6, type: 2}
-  - {fileID: 11400000, guid: 9f0431391339cf141bb1aedc54521e4e, type: 2}
+  - {fileID: 11400000, guid: e4d35f3f4cd5a6440bd6ea2b749e7666, type: 2}
   myArmorType: {fileID: 0}
-  myArmorClass: 20
-  myBodySprite: {fileID: 21300000, guid: 537febb811ba9477fa07dd89d7a224ed, type: 3}
+  myArmorClass: 12
+  myBodySprite: {fileID: 21300000, guid: 05200a5325ada4d1dbd78ee326031452, type: 3}
   myAbilityScores:
     <Strength>k__BackingField:
-      <Score>k__BackingField: 25
+      <Score>k__BackingField: 9
     <Dexterity>k__BackingField:
-      <Score>k__BackingField: 10
+      <Score>k__BackingField: 14
     <Constitution>k__BackingField:
-      <Score>k__BackingField: 20
+      <Score>k__BackingField: 11
     <Intelligence>k__BackingField:
-      <Score>k__BackingField: 10
+      <Score>k__BackingField: 17
     <Wisdom>k__BackingField:
       <Score>k__BackingField: 12
     <Charisma>k__BackingField:
-      <Score>k__BackingField: 12
+      <Score>k__BackingField: 11

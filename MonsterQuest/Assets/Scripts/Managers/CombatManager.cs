@@ -15,42 +15,31 @@ namespace MonsterQuest
             {
                 myEnemyIsAlive = true;
 
-                List<Creature> turnList = new List<Creature>();
-                foreach (Creature character in aGameState.myParty.myCharacters)
-                {
-                    turnList.Add(character);
-                }
-                turnList.Add(aGameState.myCombat.myMonster);
-
-                turnList.ShuffleList();
-
                 Console.WriteLine("The heroes " + StringHelper.JoinWithAnd(aGameState.myParty.GetNames()) + " descend into the dungeon.");
-                Console.WriteLine(aGameState.myCombat.myMonster.myDisplayName.ToUpperFirst() + " with " + aGameState.myCombat.myMonster.myHitPoints + " HP appears!");
+                Console.WriteLine(aGameState.myCombat.Monster.myDisplayName.ToUpperFirst() + " with " + aGameState.myCombat.Monster.myHitPoints + " HP appears!");
                 
                 while (myEnemyIsAlive && myPartyAlive)
                 {
-                    for (int i = 0; i < turnList.Count; i++)
-                    {
-                        if (turnList[i].myLifeStatus == ELifeStatus.Dead) continue;
+                    Creature currentActor = aGameState.myCombat.StartNextCreatureTurn();
+                    if (currentActor.myLifeStatus == ELifeStatus.Dead) continue;
 
-                        yield return turnList[i].Taketurn(aGameState).Execute();
-                            
-                        if (aGameState.myCombat.myMonster.myHitPoints <= 0)
-                        {
-                            myEnemyIsAlive = false;
-                            break;
-                        }
+                    yield return currentActor.Taketurn(aGameState).Execute();
+
+                    if (aGameState.myCombat.Monster.myHitPoints <= 0)
+                    {
+                        myEnemyIsAlive = false;
+                        break;
                     }
 
                     myPartyAlive = aGameState.myParty.OneAlive();
                 }
                 if (!myEnemyIsAlive)
                 {
-                    Console.WriteLine("The " + aGameState.myCombat.myMonster.myDisplayName + " collapses and the heroes celebrate their victory!");
+                    Console.WriteLine("The " + aGameState.myCombat.Monster.myDisplayName + " collapses and the heroes celebrate their victory!");
                 }
                 else
                 {
-                    Console.WriteLine("The party has failed and the " + aGameState.myCombat.myMonster.myDisplayName + " continues to attack unsuspecting adventurers.");
+                    Console.WriteLine("The party has failed and the " + aGameState.myCombat.Monster.myDisplayName + " continues to attack unsuspecting adventurers.");
                 }
             }
         }

@@ -15,7 +15,7 @@ namespace MonsterQuest
         public IEnumerator Execute()
         {
             int roll = DiceHelper.Roll("d20");
-            Console.WriteLine(myCharacter.myDisplayName + " is unconscious and has to perform a seath saving roll: " + roll);
+            Console.WriteLine(myCharacter.myDisplayName + " is unconscious and has to perform a death saving roll: " + roll);
             yield return myCharacter.DeathSavingThrow(roll);
 
             if (myCharacter.myLifeStatus == ELifeStatus.Conscious)

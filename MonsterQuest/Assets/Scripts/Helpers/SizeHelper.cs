@@ -21,17 +21,5 @@ namespace MonsterQuest
             };
         }
 
-        public static SizeCategory GetSizeCategory(string aStringSize)
-        {
-            foreach (SizeCategory size in Enum.GetValues(typeof(SizeCategory)))
-            {
-                if (size.ToString().ToLower() == aStringSize.ToLower())
-                    return size;
-            }
-
-            return SizeCategory.None;
-        }
-
-
     }
 }

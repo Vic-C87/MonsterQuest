@@ -54,22 +54,23 @@ namespace MonsterQuest
                     new Character("Dayana", myCharacterBodySprites[2], 10, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor), 
                     new Character("Rolando", myCharacterBodySprites[3], 10, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor) 
                 });
-            myGameState = new GameState(party);
-            myMonsterTypes = Database.monsterTypes.ToArray<MonsterType>();
+
+            List<Monster> monsters = new List<Monster>();
+            foreach (MonsterType type in myMonsterTypes)
+            {
+                monsters.Add(new Monster(type));
+            }
+            myGameState = new GameState(party, monsters);
         }
 
         IEnumerator Simulate()
         {
             yield return myCombatPresenter.InitializeParty(myGameState);
 
-            for (int i = 0; i < myMonsterTypes.Length; i++)
+            while (myGameState.EnterCombatWithMonster())
             {
-                if (myGameState.myParty.OneAlive())
-                {
-                    myGameState.EnterCombatWithMonster(new Monster(myMonsterTypes[i]));
-                    yield return myCombatPresenter.InitializeMonster(myGameState);
-                    yield return myCombatManager.Simulate(myGameState);
-                }
+                yield return myCombatPresenter.InitializeMonster(myGameState);
+                yield return myCombatManager.Simulate(myGameState);
             }
 
             myHeroes = CheckHeroesAlive();
