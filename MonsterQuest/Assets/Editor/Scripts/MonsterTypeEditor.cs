@@ -33,7 +33,7 @@ namespace MonsterQuest
 
         private void OnMonsterChange(ChangeEvent<string> aChange)
         {
-            
+            MonsterTypeImporter.ImportData(aChange.newValue, (MonsterType)serializedObject.targetObject);
         }
     }
 }

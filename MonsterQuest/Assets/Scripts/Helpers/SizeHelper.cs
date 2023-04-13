@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace MonsterQuest
@@ -19,5 +20,18 @@ namespace MonsterQuest
                 { SizeCategory.Gargantuan, 20f }
             };
         }
+
+        public static SizeCategory GetSizeCategory(string aStringSize)
+        {
+            foreach (SizeCategory size in Enum.GetValues(typeof(SizeCategory)))
+            {
+                if (size.ToString().ToLower() == aStringSize.ToLower())
+                    return size;
+            }
+
+            return SizeCategory.None;
+        }
+
+
     }
 }

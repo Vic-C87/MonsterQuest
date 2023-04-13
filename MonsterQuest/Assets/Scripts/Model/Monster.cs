@@ -47,7 +47,7 @@ namespace MonsterQuest
 
                 for (int i = 0; i < aGameState.myParty.myCharacters.Count; i++)
                 {
-                    if(aGameState.myParty.myCharacters[i].myLifeStatus != ELifeStatus.Dead && aGameState.myParty.myCharacters[i].myHitPoints < lowestHP)
+                    if(aGameState.myParty.myCharacters[i].myLifeStatus == ELifeStatus.Conscious && aGameState.myParty.myCharacters[i].myHitPoints < lowestHP)
                     {
                         lowestHP = aGameState.myParty.myCharacters[i].myHitPoints;
                         lowestIndex = i;
