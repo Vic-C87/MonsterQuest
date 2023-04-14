@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace MonsterQuest
 {
+    [Serializable]
     public abstract class Creature
     {
         public string myDisplayName { get; protected set; }
@@ -17,7 +18,7 @@ namespace MonsterQuest
         public SizeCategory mySizeCategory { get; protected set; }
         public float mySpaceInFeet { get; }
 
-        public CreaturePresenter myPresenter { get; protected set; }
+        [field: NonSerialized] public CreaturePresenter myPresenter { get; private set; }
 
         public ELifeStatus myLifeStatus { get; protected set; }
 

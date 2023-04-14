@@ -725,7 +725,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 05200a5325ada4d1dbd78ee326031452, type: 3}
   - {fileID: 21300000, guid: e12d725ecf6954adf9e66d736a1d0c22, type: 3}
   - {fileID: 21300000, guid: 956386156c63c4eee816fc62eaa55e2c, type: 3}
-  myMonsterTypes: []
+  myMonsterTypes:
+  - {fileID: 11400000, guid: 9b09021aed264dd4db702be5d89bd799, type: 2}
+  - {fileID: 11400000, guid: 00df21a7d6ac51d4ba9a671982c62357, type: 2}
+  - {fileID: 11400000, guid: 1baf172577da6dc45b14ca9a9ef0bd93, type: 2}
 --- !u!1 &1088585501
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,6 +843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit

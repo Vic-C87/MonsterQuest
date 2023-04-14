@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace MonsterQuest
 {
+    [Serializable]
     public class GameState
     {
-        public Party myParty { get; private set; }
+
+        [field: NonSerialized] public Party myParty { get; private set; }
         public Combat myCombat { get; private set; }
 
         List<Monster> myMonstersToFight = new List<Monster>();

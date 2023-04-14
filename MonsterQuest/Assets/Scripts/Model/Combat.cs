@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace MonsterQuest
 {
+    [Serializable]
     public class Combat
     {
         public Monster Monster { get; private set; }

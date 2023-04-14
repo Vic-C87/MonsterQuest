@@ -55,12 +55,17 @@ namespace MonsterQuest
                     new Character("Rolando", myCharacterBodySprites[3], 10, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor) 
                 });
 
-            List<Monster> monsters = new List<Monster>();
-            foreach (MonsterType type in myMonsterTypes)
+            myGameState = SaveGameHelper.Load(); 
+            
+            if (myGameState == null)
             {
-                monsters.Add(new Monster(type));
+                List<Monster> monsters = new List<Monster>();
+                foreach (MonsterType type in myMonsterTypes)
+                {
+                    monsters.Add(new Monster(type));
+                }
+                myGameState = new GameState(party, monsters);
             }
-            myGameState = new GameState(party, monsters);
         }
 
         IEnumerator Simulate()
@@ -87,6 +92,7 @@ namespace MonsterQuest
                 }
                 Console.WriteLine("After " + myMonsterTypes.Length + " grueling battles, the hero" + stillAlive + " return from the dungeons to live another day.");
             }
+            SaveGameHelper.Delete();
         }
 
         List<string> CheckHeroesAlive()

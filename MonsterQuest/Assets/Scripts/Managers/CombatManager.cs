@@ -20,6 +20,7 @@ namespace MonsterQuest
                 
                 while (myEnemyIsAlive && myPartyAlive)
                 {
+                    SaveGameHelper.Save(aGameState);
                     Creature currentActor = aGameState.myCombat.StartNextCreatureTurn();
                     if (currentActor.myLifeStatus == ELifeStatus.Dead) continue;
 

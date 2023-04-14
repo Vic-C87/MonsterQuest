@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace MonsterQuest
 {
+    [Serializable]
     public class Character : Creature
     {
         public WeaponType myWeaponType { get; private set; }
@@ -12,7 +13,7 @@ namespace MonsterQuest
 
         public override IEnumerable myDeathSavingThrows { get { return myDeathSavingThrowsList; } }
 
-        List<bool> myDeathSavingThrowsList = new List<bool>();
+        [field: SerializeField]List<bool> myDeathSavingThrowsList = new List<bool>();
 
         public override int myArmorClass => base.myArmorClass;
 

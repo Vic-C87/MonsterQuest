@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace MonsterQuest
 {
+    [Serializable]
     public class Monster : Creature
     {
         public MonsterType myType { get; }

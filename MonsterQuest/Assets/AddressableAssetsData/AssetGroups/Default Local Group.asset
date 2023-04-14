@@ -25,7 +25,58 @@ MonoBehaviour:
   - m_GUID: dc73fce54e6d940688e45b6aaa623b23
     m_Address: Assets/Prefabs/Death saving throw.prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - database
+  - m_GUID: 22ea8fb0476a64374b5c5831f4d2d6be
+    m_Address: Assets/Sprites
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - database
+  - m_GUID: 9b09021aed264dd4db702be5d89bd799
+    m_Address: Assets/Scripts/ScriptableObjects/Database/Monsters/Kobold.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - database
+  - m_GUID: 00df21a7d6ac51d4ba9a671982c62357
+    m_Address: Assets/Scripts/ScriptableObjects/Database/Monsters/Azer.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - database
+  - m_GUID: 1baf172577da6dc45b14ca9a9ef0bd93
+    m_Address: Assets/Scripts/ScriptableObjects/Database/Monsters/GiantBat.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - database
+  - m_GUID: c16f938b056b96041a4b59a98cf0b70b
+    m_Address: Assets/Scripts/ScriptableObjects/Database/Monsters/Magmin.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - database
+  - m_GUID: 87abda5a3c0e8664c8c4c2f6fba136ba
+    m_Address: Assets/Scripts/ScriptableObjects/Database/Monsters/Troll.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - database
+  - m_GUID: ec39d2d2861c3bf48b0e231dafcabab7
+    m_Address: Assets/Scripts/ScriptableObjects/Database/Monsters/Mage.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - database
+  - m_GUID: 7d5fd42a5addb4f4595e139a32e4638d
+    m_Address: Assets/Scripts/ScriptableObjects/Database/Monsters/Orc.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - database
+  - m_GUID: 9f52d15432cfc4d4f969435e020a87b2
+    m_Address: Assets/Sprites/Characters
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - database
+  - m_GUID: 58e27aec593234ddf8f086ec85e5a76f
+    m_Address: Assets/Sprites/Monsters
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - database
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0eaca5ffeb7b2c84aad625f787dc9356, type: 2}
   m_SchemaSet:
