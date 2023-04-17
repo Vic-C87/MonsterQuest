@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: bf7311b7e7e37024e9d1f57387b9e395
   m_SerializeEntries:
   - m_GUID: 421144eb7935ea841abc613bf273496d
-    m_Address: Assets/Scripts/ScriptableObjects/Database
+    m_Address: Assets/ScriptableObjects/Database
     m_ReadOnly: 0
     m_SerializedLabels:
     - database
