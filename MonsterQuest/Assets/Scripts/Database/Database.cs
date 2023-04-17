@@ -24,6 +24,7 @@ namespace MonsterQuest
 
         public static IEnumerator Initialize()
         {
+            Debug.Log("Init");
             yield return Addressables.InitializeAsync();
 
             // Load all assets.
@@ -34,6 +35,10 @@ namespace MonsterQuest
             // sprites first so they get registered before their textures (which have the same primary key).
             yield return LoadAssets(_sprites);
             yield return LoadAssets(_allObjects);
+            Debug.Log(_monsterTypes.Count);
+            Debug.Log(_itemTypes.Count);
+            Debug.Log(_sprites.Count);
+            Debug.Log(_allObjects.Count);
         }
 
         public static MonsterType GetMonsterType(string displayName)
@@ -48,6 +53,8 @@ namespace MonsterQuest
 
         public static string GetPrimaryKeyForAsset(Object asset)
         {
+            Debug.Log("Assest: GetPrimarykey");
+            Debug.Log(asset.ToString());
             if (!_primaryKeysByAssets.ContainsKey(asset))
             {
                 Debug.LogError($"Referenced Unity Object ({asset.name} of type {asset.GetType().Name}) is not part of the database.");
@@ -83,6 +90,7 @@ namespace MonsterQuest
 
             foreach (IResourceLocation location in loadResourceLocationsHandle.Result)
             {
+                Debug.Log("PK : " + location.PrimaryKey);
                 AsyncOperationHandle<TObject> loadAssetHandle = Addressables.LoadAssetAsync<TObject>(location);
 
                 loadAssetHandle.Completed += loadedAssetHandle =>

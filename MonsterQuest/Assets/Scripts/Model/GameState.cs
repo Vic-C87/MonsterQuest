@@ -7,8 +7,7 @@ namespace MonsterQuest
     [Serializable]
     public class GameState
     {
-
-        [field: NonSerialized] public Party myParty { get; private set; }
+        public Party myParty { get; private set; }
         public Combat myCombat { get; private set; }
 
         List<Monster> myMonstersToFight = new List<Monster>();

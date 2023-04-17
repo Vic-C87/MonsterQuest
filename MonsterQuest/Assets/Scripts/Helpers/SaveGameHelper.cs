@@ -10,7 +10,7 @@ namespace MonsterQuest
 {
     public static class SaveGameHelper
     {
-        static string mySaveFilePath = UnityEngine.Application.persistentDataPath + "Victor.txt";
+        static string mySaveFilePath = UnityEngine.Application.persistentDataPath + "/Victor.txt";
 
         static JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
         {
@@ -20,7 +20,7 @@ namespace MonsterQuest
             TypeNameHandling = TypeNameHandling.Auto,
             ContractResolver = new DefaultContractResolver()
             {
-                IgnoreSerializableInterface = false
+                IgnoreSerializableAttribute = false
             },
             Converters = new List<JsonConverter>
             {
