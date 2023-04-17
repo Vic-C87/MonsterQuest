@@ -31,6 +31,7 @@ namespace MonsterQuest
 
         IEnumerator Start()
         {
+            Debug.Log(Application.streamingAssetsPath);
             yield return Database.Initialize();
             NewGame();
             yield return Simulate();

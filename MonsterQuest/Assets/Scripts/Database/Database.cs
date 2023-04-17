@@ -39,6 +39,15 @@ namespace MonsterQuest
             Debug.Log(_itemTypes.Count);
             Debug.Log(_sprites.Count);
             Debug.Log(_allObjects.Count);
+            foreach (var kvp in _primaryKeysByAssets) 
+            {
+                Debug.Log(kvp.Key + " " + kvp.Value + " " + kvp.Key.GetInstanceID());
+            }
+
+            foreach (var kvp in _assetsByPrimaryKey) 
+            {
+                Debug.Log(kvp.Key + " " + kvp.Value);
+            }
         }
 
         public static MonsterType GetMonsterType(string displayName)
@@ -57,7 +66,12 @@ namespace MonsterQuest
             Debug.Log(asset.ToString());
             if (!_primaryKeysByAssets.ContainsKey(asset))
             {
-                Debug.LogError($"Referenced Unity Object ({asset.name} of type {asset.GetType().Name}) is not part of the database.");
+                Debug.LogError($"Referenced Unity Object ({asset.name} of type {asset.GetType().Name}) is not part of the database. {asset.GetInstanceID()}");
+
+                foreach (var kvp in _primaryKeysByAssets)
+                {
+                    Debug.Log(kvp.Key + " " + kvp.Value + " " + kvp.Key.GetInstanceID());
+                }
 
                 return null;
             }
@@ -106,10 +120,15 @@ namespace MonsterQuest
                         {
                             Debug.LogError($"Multiple assets with the same instance ID. {location.PrimaryKey} - {instanceId}");
                         }
+                        else
+                        {
+                            Debug.Log($"Asset alreaduy added, primary key OK   {location.PrimaryKey} - {instanceId}" );
+                        }
                     }
                     else
                     {
                         _primaryKeysByAssets[asset] = location.PrimaryKey;
+                        Debug.Log($"Setting: {location.PrimaryKey}  ASSET:{asset}");
                     }
 
                     if (_assetsByPrimaryKey.ContainsKey(location.PrimaryKey))

@@ -10,7 +10,7 @@ namespace MonsterQuest
 {
     public static class SaveGameHelper
     {
-        static string mySaveFilePath = UnityEngine.Application.persistentDataPath + "/Victor.txt";
+        static string mySaveFilePath = Path.Combine(UnityEngine.Application.persistentDataPath,"Victor.json");
 
         static JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
         {
