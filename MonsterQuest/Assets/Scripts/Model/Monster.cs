@@ -17,6 +17,8 @@ namespace MonsterQuest
 
         public override AbilityScores myAbilityScores => myType.myAbilityScores;
 
+        protected override int myProficiencyBonusBase => myType.myChallengeRating;
+
         public Monster(MonsterType aType) 
             : base(aType.myDisplayName, aType.myBodySprite, aType.mySizeCategory)
         {
@@ -85,21 +87,14 @@ namespace MonsterQuest
             }
         }
 
-        public string GetRandomWeaponDiceNotation()
-        {
-            int weaponIndex = DiceHelper.GetRandom(myType.myWeaponTypes.Length);
-            weaponIndex--;
-            return myType.myWeaponTypes[weaponIndex].myDamageRoll;
-        }
-
-        WeaponType GetRandomWeapon()
-        {
-            return myType.myWeaponTypes.Random();
-        }
-
         public override IEnumerator Death(bool aCritical)
         {
             yield return base.Death(aCritical);
+        }
+
+        public override bool IsProficientWithWeaponType(WeaponType aWeaponType)
+        {
+            return true;
         }
     }
 }

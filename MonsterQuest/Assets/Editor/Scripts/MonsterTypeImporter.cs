@@ -33,12 +33,11 @@ namespace MonsterQuest
             aMonsterType.mySizeCategory = Helpers.GetSizeCategory((string)monsterData["size"]);
             aMonsterType.myAlignment = (string)monsterData["alignment"];
             aMonsterType.myHitPointsRoll = (string)monsterData["hit_points_roll"];
-
             //Add weaponType
             //Add armorType
 
             aMonsterType.myArmorClass = (int)monsterData["armor_class"][0]["value"];
-
+            aMonsterType.myChallengeRating = (int)monsterData["challenge_rating"];
             //Add Sprite
 
             aMonsterType.myAbilityScores.Strength = new ((int)monsterData["strength"]);

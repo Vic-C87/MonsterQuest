@@ -38,12 +38,18 @@ namespace MonsterQuest
                 modifier = myAttacker.myAbilityScores[EAbility.Strength].Modifier;
             }
             int attackRoll = DiceHelper.Roll("d20") + modifier;
+            
+            if (myAttacker.IsProficientWithWeaponType(myWeaponType)) 
+            {
+                attackRoll += myAttacker.myProficiencyBonus;
+            }
+
             int damage;
             if (myTarget.myLifeStatus == ELifeStatus.Conscious)
             {
                 if (attackRoll >= myTarget.myArmorClass && attackRoll != 1)
                 {
-                    damage = Math.Max(0, DiceHelper.Roll(myWeaponType.myDamageRoll) + modifier);
+                    damage = Math.Max(1, DiceHelper.Roll(myWeaponType.myDamageRoll) + modifier);
 
                     bool critical = attackRoll == 20;
                     yield return myAttacker.myPresenter.Attack();

@@ -30,6 +30,16 @@ namespace MonsterQuest
 
         public abstract AbilityScores myAbilityScores { get; }
 
+        public int myProficiencyBonus 
+        {
+            get
+            {
+                return CalculateProficiencyBonus(myProficiencyBonusBase);
+            }
+        }
+
+        protected abstract int myProficiencyBonusBase { get; }
+
         public Creature(string aDisplayName, Sprite aBodySprite, SizeCategory aSizeCategory)
         {
             myDisplayName = aDisplayName;
@@ -54,6 +64,8 @@ namespace MonsterQuest
 
         public abstract IAction Taketurn(GameState aGameState);
 
+        public abstract bool IsProficientWithWeaponType(WeaponType aWeaponType);
+
         public virtual IEnumerator Death(bool aCritical)
         {
             yield return myPresenter.TakeDamage(aCritical);
@@ -66,6 +78,11 @@ namespace MonsterQuest
         {
             myHitPoints = Mathf.Min(myHitPoints + anAmount, myHitPointsMaximum);
             yield return myPresenter.Heal();
+        }
+
+        protected int CalculateProficiencyBonus(int aBaseValue)
+        {
+            return (aBaseValue / 4) + (aBaseValue % 4 == 0 ? 1 : 2);
         }
     }
 }

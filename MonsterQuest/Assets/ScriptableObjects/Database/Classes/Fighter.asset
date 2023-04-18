@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 368fd830b6ae1be41a60669f4b6b3f86, type: 3}
-  m_Name: DragonTurtleBite
+  m_Script: {fileID: 11500000, guid: 40d7d368a5a3a444b957aa1ff708bedb, type: 3}
+  m_Name: Fighter
   m_EditorClassIdentifier: 
-  myDisplayName: Bite
-  myWeight: 0
-  myDamageRoll: 3d12
-  myIsRanged: 0
-  myIsFinesse: 0
-  myWeaponCategory: 
+  myDisplayName: Fighter
+  myWeaponProficiencies: 0000000001000000

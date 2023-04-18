@@ -19,13 +19,21 @@ namespace MonsterQuest
 
         public override AbilityScores myAbilityScores { get; }
 
-        public Character(string aDisplayName, Sprite aBodySprite, int someHitPointsMaximum, SizeCategory aSizeCategory, WeaponType aWeaponType, ArmorType anArmorType) 
+        public int myLevel { get; private set; }
+
+        public ClassType myClassType { get; private set; }
+
+        protected override int myProficiencyBonusBase => myLevel;
+
+        public Character(string aDisplayName, Sprite aBodySprite, int someHitPointsMaximum, SizeCategory aSizeCategory, WeaponType aWeaponType, ArmorType anArmorType, ClassType aClassType) 
             : base(aDisplayName, aBodySprite, aSizeCategory)
         {
             myHitPointsMaximum = someHitPointsMaximum;
             myWeaponType = aWeaponType;
             myArmorType = anArmorType;
+            myClassType = aClassType;
             myAbilityScores = new (true);
+            myLevel = 1;
             Initialize();
         }
 
@@ -152,6 +160,18 @@ namespace MonsterQuest
                 myPresenter.UpdateStableStatus();
                 yield return myPresenter.RegainConsciousness();
             }
+        }
+
+        public override bool IsProficientWithWeaponType(WeaponType aWeaponType)
+        {
+            for (int i = 0; i < aWeaponType.myWeaponCategory.Length; i++) 
+            {
+                if (myClassType.myWeaponProficiencies.Contains(aWeaponType.myWeaponCategory[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

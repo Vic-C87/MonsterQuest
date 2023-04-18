@@ -64,7 +64,11 @@ namespace MonsterQuest
 
             return score;
         }
-
+        /// <summary>
+        /// Returns random int between 1 and max inclusive
+        /// </summary>
+        /// <param name="max"></param>
+        /// <returns></returns>
         public static int GetRandom(int max)
         {
             int result;
