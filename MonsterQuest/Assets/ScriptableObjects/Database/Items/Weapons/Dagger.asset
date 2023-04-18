@@ -17,3 +17,4 @@ MonoBehaviour:
   myDamageRoll: 1d4
   myIsRanged: 0
   myIsFinesse: 1
+  myWeaponCategory: 0000000007000000

@@ -15,3 +15,6 @@ MonoBehaviour:
   myDisplayName: Warhammer
   myWeight: 2
   myDamageRoll: 1d8
+  myIsRanged: 0
+  myIsFinesse: 0
+  myWeaponCategory: 010000000a000000

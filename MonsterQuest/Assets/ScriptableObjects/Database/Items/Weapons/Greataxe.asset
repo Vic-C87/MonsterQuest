@@ -15,3 +15,6 @@ MonoBehaviour:
   myDisplayName: Greataxe
   myWeight: 7
   myDamageRoll: 1d12
+  myIsRanged: 0
+  myIsFinesse: 0
+  myWeaponCategory: 01000000

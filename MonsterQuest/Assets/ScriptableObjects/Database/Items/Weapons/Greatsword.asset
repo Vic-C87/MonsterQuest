@@ -15,3 +15,6 @@ MonoBehaviour:
   myDisplayName: Greatsword
   myWeight: 6
   myDamageRoll: 2d6
+  myIsRanged: 0
+  myIsFinesse: 0
+  myWeaponCategory: 01000000
