@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Fighter
   m_EditorClassIdentifier: 
   myDisplayName: Fighter
+  myHitDie: d10
   myWeaponProficiencies: 0000000001000000

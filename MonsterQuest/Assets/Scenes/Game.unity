@@ -741,20 +741,20 @@ MonoBehaviour:
     m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     m_EditorAssetChanged: 0
+  - m_AssetGUID: 674a45a2e4c6e4392bc8cd791ed443c0
+    m_SubObjectName: Wizard
+    m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    m_EditorAssetChanged: 0
   myMonsterTypes:
-  - m_AssetGUID: 00df21a7d6ac51d4ba9a671982c62357
+  - m_AssetGUID: 7d5fd42a5addb4f4595e139a32e4638d
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  - m_AssetGUID: c16f938b056b96041a4b59a98cf0b70b
+  - m_AssetGUID: 87abda5a3c0e8664c8c4c2f6fba136ba
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  - m_AssetGUID: 1baf172577da6dc45b14ca9a9ef0bd93
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  myDebugMonsterType: {fileID: 0}
 --- !u!1 &1088585501
 GameObject:
   m_ObjectHideFlags: 0

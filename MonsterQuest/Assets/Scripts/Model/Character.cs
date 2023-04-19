@@ -21,19 +21,27 @@ namespace MonsterQuest
 
         public int myLevel { get; private set; }
 
+        int myCurrentXP;
+        int myXPForNextLevel;
+
+        int myHitDieCount;
+
         public ClassType myClassType { get; private set; }
 
         protected override int myProficiencyBonusBase => myLevel;
 
-        public Character(string aDisplayName, Sprite aBodySprite, int someHitPointsMaximum, SizeCategory aSizeCategory, WeaponType aWeaponType, ArmorType anArmorType, ClassType aClassType) 
+        public Character(string aDisplayName, Sprite aBodySprite, SizeCategory aSizeCategory, WeaponType aWeaponType, ArmorType anArmorType, ClassType aClassType) 
             : base(aDisplayName, aBodySprite, aSizeCategory)
         {
-            myHitPointsMaximum = someHitPointsMaximum;
             myWeaponType = aWeaponType;
             myArmorType = anArmorType;
             myClassType = aClassType;
             myAbilityScores = new (true);
             myLevel = 1;
+            myHitDieCount = 1;
+            myXPForNextLevel = LevelUpHelper.GetXPForNextLevel(myLevel);
+            myCurrentXP = 0;
+            myHitPointsMaximum = DiceHelper.Roll(myClassType.myHitDie + myAbilityScores.Constitution.Modifier.ToString());
             Initialize();
         }
 
@@ -172,6 +180,47 @@ namespace MonsterQuest
                 }
             }
             return false;
+        }
+
+        public IEnumerator GainExperiencePoints(int someXP)
+        {
+            myCurrentXP += someXP;
+
+            Console.WriteLine(myDisplayName + " gains " + someXP + "XP from the battle.");
+
+            while (myCurrentXP >= myXPForNextLevel)
+            {
+                yield return LevelUp();
+            }
+        }
+
+        IEnumerator LevelUp()
+        {
+            myLevel++;
+            Console.WriteLine(myDisplayName + " has reached level " + myLevel + "!");
+            myXPForNextLevel = LevelUpHelper.GetXPForNextLevel(myLevel);
+            int roll = DiceHelper.Roll(myClassType.myHitDie + myAbilityScores.Constitution.Modifier.ToString());
+            myHitPointsMaximum += roll;
+            myHitDieCount = Mathf.Min(++myHitDieCount, myLevel);
+            Console.WriteLine(myDisplayName + " maximum Hit Points increase to " + myHitPointsMaximum + "!");
+            yield return myPresenter.LevelUp();
+        }
+
+        public IEnumerator TakeShortRest()
+        {
+            while (myHitDieCount > 0 && myHitPoints < myHitPointsMaximum) // maybe change to be optional to use hit die?
+            {
+                int roll = DiceHelper.Roll(myClassType.myHitDie);
+                myHitDieCount--;
+
+                if (myHitPoints > 0)
+                {
+                    myLifeStatus = ELifeStatus.Conscious;
+                }
+                yield return Heal(roll);
+
+                Console.WriteLine("After a short rest " + myDisplayName + " heals up and now has a total of " + myHitPoints + " Hit Points!");
+            }
         }
     }
 }

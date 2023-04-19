@@ -53,10 +53,11 @@ namespace MonsterQuest
                 
                 yield return ValidateHeroes();
                 Party party = new Party(new Character[] 
-                {   new Character("Jazlyn",     myCharacterBodySprites[0].Asset as Sprite, 10, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor, Database.GetClassType("Fighter")), 
-                    new Character("Theron",     myCharacterBodySprites[1].Asset as Sprite, 10, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor, Database.GetClassType("Fighter")), 
-                    new Character("Dayana",     myCharacterBodySprites[2].Asset as Sprite, 10, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor, Database.GetClassType("Fighter")), 
-                    new Character("Rolando",    myCharacterBodySprites[3].Asset as Sprite, 10, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor, Database.GetClassType("Fighter")) 
+                {   new Character("Jazlyn",     myCharacterBodySprites[0].Asset as Sprite, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor, Database.GetClassType("Fighter")), 
+                    new Character("Theron",     myCharacterBodySprites[1].Asset as Sprite, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor, Database.GetClassType("Fighter")), 
+                    new Character("Dayana",     myCharacterBodySprites[2].Asset as Sprite, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor, Database.GetClassType("Fighter")), 
+                    new Character("Rolando",    myCharacterBodySprites[3].Asset as Sprite, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor, Database.GetClassType("Fighter")),
+                    new Character("WizBoy",     myCharacterBodySprites[4].Asset as Sprite, SizeCategory.Medium, weapons[DiceHelper.GetRandom(weapons.Count) -1], armor, Database.GetClassType("Fighter"))
                 });
 
                 yield return ValidateMonsters();

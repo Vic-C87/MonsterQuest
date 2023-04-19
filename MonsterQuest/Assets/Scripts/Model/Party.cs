@@ -39,7 +39,7 @@ namespace MonsterQuest
             int count = 0;
             foreach(Character aCharacter in myCharacters)
             {
-                if (aCharacter.myLifeStatus == ELifeStatus.Conscious)
+                if (aCharacter.myLifeStatus != ELifeStatus.Dead)
                 {
                     count += 1;
                 }

@@ -11,7 +11,7 @@ namespace MonsterQuest
 
         public IEnumerator Simulate(GameState aGameState)
         {
-            if (aGameState.myParty.Count() > 0)
+            if (aGameState.myParty.OneAlive())
             {
                 myEnemyIsAlive = true;
 
@@ -37,10 +37,40 @@ namespace MonsterQuest
                 if (!myEnemyIsAlive)
                 {
                     Console.WriteLine("The " + aGameState.myCombat.Monster.myDisplayName + " collapses and the heroes celebrate their victory!");
+                    yield return RewardHeroes(aGameState);
+                    yield return RestHeroes(aGameState);
                 }
                 else
                 {
                     Console.WriteLine("The party has failed and the " + aGameState.myCombat.Monster.myDisplayName + " continues to attack unsuspecting adventurers.");
+                }
+            }
+        }
+
+        IEnumerator RewardHeroes(GameState aGameState)
+        {
+            int xpToShare = aGameState.myCombat.Monster.myType.myXPToGive;
+            int modulusXP = xpToShare % aGameState.myParty.Count();
+
+            xpToShare = xpToShare / aGameState.myParty.Count();
+
+            foreach (Character character in aGameState.myParty.myCharacters) 
+            {
+                if (character.myLifeStatus != ELifeStatus.Dead) 
+                {
+                    yield return character.GainExperiencePoints(xpToShare + modulusXP);
+                    modulusXP = 0; 
+                }
+            }
+        }
+
+        IEnumerator RestHeroes(GameState aGameState) 
+        {
+            foreach (Character character in aGameState.myParty.myCharacters)
+            {
+                if (character.myLifeStatus != ELifeStatus.Dead)
+                {
+                    yield return character.TakeShortRest();
                 }
             }
         }

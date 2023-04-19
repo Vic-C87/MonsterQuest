@@ -16,6 +16,7 @@ namespace MonsterQuest
         public int myArmorClass;
         public Sprite myBodySprite;
         public int myChallengeRating;
+        public int myXPToGive;
         public AbilityScores myAbilityScores;
     }
 }

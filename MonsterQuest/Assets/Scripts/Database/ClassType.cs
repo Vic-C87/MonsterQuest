@@ -8,6 +8,8 @@ namespace MonsterQuest
     public class ClassType : ScriptableObject
     {
         public string myDisplayName;
+        public string myHitDie;
         public List<EWeaponCategory> myWeaponProficiencies;
+
     }
 }

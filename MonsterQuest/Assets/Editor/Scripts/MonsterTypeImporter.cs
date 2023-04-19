@@ -38,6 +38,7 @@ namespace MonsterQuest
 
             aMonsterType.myArmorClass = (int)monsterData["armor_class"][0]["value"];
             aMonsterType.myChallengeRating = (int)monsterData["challenge_rating"];
+            aMonsterType.myXPToGive = (int)monsterData["xp"];
             //Add Sprite
 
             aMonsterType.myAbilityScores.Strength = new ((int)monsterData["strength"]);
