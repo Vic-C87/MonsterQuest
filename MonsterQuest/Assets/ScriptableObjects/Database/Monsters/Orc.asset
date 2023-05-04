@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202e4c57de6ae6a4a95c961b1e894e49, type: 3}
   m_Name: Orc
   m_EditorClassIdentifier: 
-  myDisplayName: orc
+  myDisplayName: Orc
   mySizeCategory: 3
-  myAlignment: Chaotic Evil
+  myAlignment: chaotic evil
   myHitPointsRoll: 2d8+6
   myWeaponTypes:
   - {fileID: 11400000, guid: e4d35f3f4cd5a6440bd6ea2b749e7666, type: 2}
@@ -22,6 +22,8 @@ MonoBehaviour:
   myArmorType: {fileID: 11400000, guid: 05dfb54f95c08454faad05f4b2d919d9, type: 2}
   myArmorClass: 13
   myBodySprite: {fileID: 21300000, guid: 19e0e065e541e48ae99ff4998c0ee5db, type: 3}
+  myChallengeRating: 0
+  myXPToGive: 100
   myAbilityScores:
     <Strength>k__BackingField:
       <Score>k__BackingField: 16

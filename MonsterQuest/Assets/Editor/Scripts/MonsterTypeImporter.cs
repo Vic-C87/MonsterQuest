@@ -2,6 +2,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
+using UnityEditor;
 
 namespace MonsterQuest
 {
@@ -48,29 +49,21 @@ namespace MonsterQuest
             aMonsterType.myAbilityScores.Wisdom = new((int)monsterData["wisdom"]);
             aMonsterType.myAbilityScores.Charisma = new((int)monsterData["charisma"]);
 
+            EditorUtility.SetDirty(aMonsterType);
         }
 
         static void LoadMonsterNames()
         {
             HttpClient httpClient = new();
-            string responseJson = httpClient.GetStringAsync("https://www.dnd5eapi.co/api/monsters").Result;
+            JObject monsterNames = JObject.Parse(httpClient.GetStringAsync("https://www.dnd5eapi.co/api/monsters").Result);
             myMonsterIndexNames = new List<string>();
             myMonsterNamesIndexDictionary = new Dictionary<string, string>();
 
-
-            string[] patternsIndex = { "\"index\":\"", "\",\"name\":\"" };
-            string[] patternsName = { "\",\"name\":\"", "\",\"url\":" };
-
-            string[] splitIndex = responseJson.Split(patternsIndex, System.StringSplitOptions.RemoveEmptyEntries);
-            string[] splitNames = responseJson.Split(patternsName, System.StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < splitIndex.Length; i++)
+            int count = (int)monsterNames["count"];
+            for (int i = 0; i < count; i++) 
             {
-                if (i % 2 != 0)
-                {
-                    myMonsterNamesIndexDictionary.Add(splitNames[i], splitIndex[i]);
-                    myMonsterIndexNames.Add(splitNames[i]);
-                }
+                myMonsterIndexNames.Add((string)monsterNames["results"][i]["name"]);
+                myMonsterNamesIndexDictionary.Add((string)monsterNames["results"][i]["name"], (string)monsterNames["results"][i]["index"]);
             }
 
         }

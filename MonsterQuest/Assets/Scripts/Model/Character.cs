@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MonsterQuest
@@ -42,6 +43,7 @@ namespace MonsterQuest
             myXPForNextLevel = LevelUpHelper.GetXPForNextLevel(myLevel);
             myCurrentXP = 0;
             myHitPointsMaximum = DiceHelper.Roll(myClassType.myHitDie + myAbilityScores.Constitution.Modifier.ToString());
+            Debug.Log(myDisplayName + ": " + myHitPointsMaximum + "HP");
             Initialize();
         }
 
@@ -164,17 +166,17 @@ namespace MonsterQuest
                 myPresenter.ResetDeathSavingThrows();
                 myDeathSavingThrowsList.Clear();
                 myLifeStatus = ELifeStatus.Conscious;
-                myHitPoints++;
                 myPresenter.UpdateStableStatus();
                 yield return myPresenter.RegainConsciousness();
+                yield return Heal(1);
             }
         }
 
         public override bool IsProficientWithWeaponType(WeaponType aWeaponType)
         {
-            for (int i = 0; i < aWeaponType.myWeaponCategory.Length; i++) 
+            for (int i = 0; i < aWeaponType.myWeaponCategory.Count(); i++) 
             {
-                if (myClassType.myWeaponProficiencies.Contains(aWeaponType.myWeaponCategory[i]))
+                if (myClassType.myProficiencies.Contains(aWeaponType.myWeaponCategory[i]))
                 {
                     return true;
                 }
@@ -216,6 +218,8 @@ namespace MonsterQuest
                 if (myHitPoints > 0)
                 {
                     myLifeStatus = ELifeStatus.Conscious;
+                    myPresenter.UpdateStableStatus();
+                    yield return myPresenter.RegainConsciousness();
                 }
                 yield return Heal(roll);
 

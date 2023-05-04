@@ -57,8 +57,7 @@ namespace MonsterQuest
 
         public static GameState Load()
         {
-            Debug.Log(mySaveFilePath);
-            if (!SaveFileExists) { Debug.LogWarning("Cannot locate save file"); return null; }
+            if (!SaveFileExists) { Debug.LogWarning("Cannot locate save file, starting new game instead"); return null; }
 
             string load;
 

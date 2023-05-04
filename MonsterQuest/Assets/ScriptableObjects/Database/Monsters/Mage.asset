@@ -21,6 +21,8 @@ MonoBehaviour:
   myArmorType: {fileID: 0}
   myArmorClass: 12
   myBodySprite: {fileID: 21300000, guid: 05200a5325ada4d1dbd78ee326031452, type: 3}
+  myChallengeRating: 6
+  myXPToGive: 2300
   myAbilityScores:
     <Strength>k__BackingField:
       <Score>k__BackingField: 9

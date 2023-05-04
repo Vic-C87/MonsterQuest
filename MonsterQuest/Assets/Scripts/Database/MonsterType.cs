@@ -11,12 +11,12 @@ namespace MonsterQuest
         public SizeCategory mySizeCategory;
         public string myAlignment;
         public string myHitPointsRoll;
-        public WeaponType[] myWeaponTypes;
+        public List<WeaponType> myWeaponTypes = new List<WeaponType>();
         public ArmorType myArmorType;
         public int myArmorClass;
         public Sprite myBodySprite;
         public int myChallengeRating;
         public int myXPToGive;
-        public AbilityScores myAbilityScores;
+        public AbilityScores myAbilityScores = new();
     }
 }

@@ -25,7 +25,6 @@ namespace MonsterQuest
 
             inspector.Add(importField);
 
-
             InspectorElement.FillDefaultInspector(inspector, serializedObject, this);
 
             return inspector;

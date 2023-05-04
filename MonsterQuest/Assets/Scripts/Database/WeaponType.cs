@@ -10,6 +10,6 @@ namespace MonsterQuest
         public string myDamageRoll;
         public bool myIsRanged;
         public bool myIsFinesse;
-        public EWeaponCategory[] myWeaponCategory;
+        public List<string> myWeaponCategory = new List<string>();
     }
 }

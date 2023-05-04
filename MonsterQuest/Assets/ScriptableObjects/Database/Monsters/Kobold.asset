@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202e4c57de6ae6a4a95c961b1e894e49, type: 3}
   m_Name: Kobold
   m_EditorClassIdentifier: 
-  myDisplayName: kobold
+  myDisplayName: Kobold
   mySizeCategory: 2
-  myAlignment: Lawful Evil
+  myAlignment: lawful evil
   myHitPointsRoll: 2d6-2
   myWeaponTypes:
   - {fileID: 11400000, guid: 4969c88f6d52d4342acd786963b08405, type: 2}
   myArmorType: {fileID: 0}
   myArmorClass: 12
   myBodySprite: {fileID: 21300000, guid: 55524b0152da144b29f8d4d0089ef572, type: 3}
+  myChallengeRating: 0
+  myXPToGive: 25
   myAbilityScores:
     <Strength>k__BackingField:
       <Score>k__BackingField: 7

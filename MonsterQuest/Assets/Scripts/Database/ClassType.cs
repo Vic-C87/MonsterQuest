@@ -9,7 +9,6 @@ namespace MonsterQuest
     {
         public string myDisplayName;
         public string myHitDie;
-        public List<EWeaponCategory> myWeaponProficiencies;
-
+        public List<string> myProficiencies = new List<string>();
     }
 }

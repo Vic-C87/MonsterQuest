@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202e4c57de6ae6a4a95c961b1e894e49, type: 3}
   m_Name: Troll
   m_EditorClassIdentifier: 
-  myDisplayName: troll
+  myDisplayName: Troll
   mySizeCategory: 4
-  myAlignment: Chaotic Evil
+  myAlignment: chaotic evil
   myHitPointsRoll: 8d10+40
   myWeaponTypes:
   - {fileID: 11400000, guid: 132cbb66ad353c84fb377dc80dc68b6d, type: 2}
@@ -22,6 +22,8 @@ MonoBehaviour:
   myArmorType: {fileID: 0}
   myArmorClass: 15
   myBodySprite: {fileID: 21300000, guid: f1fa343faea49484d895a671f5ea4a29, type: 3}
+  myChallengeRating: 5
+  myXPToGive: 1800
   myAbilityScores:
     <Strength>k__BackingField:
       <Score>k__BackingField: 18

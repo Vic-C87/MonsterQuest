@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202e4c57de6ae6a4a95c961b1e894e49, type: 3}
   m_Name: Azer
   m_EditorClassIdentifier: 
-  myDisplayName: azer
+  myDisplayName: Azer
   mySizeCategory: 3
-  myAlignment: Lawful Neutral
+  myAlignment: lawful neutral
   myHitPointsRoll: 6d8+12
   myWeaponTypes:
   - {fileID: 11400000, guid: f9e7b36b27e8f61438bdf96c8f174a8e, type: 2}
   myArmorType: {fileID: 0}
-  myArmorClass: 17
+  myArmorClass: 15
   myBodySprite: {fileID: 21300000, guid: c4e067472c3b8482c974dac88c53187a, type: 3}
+  myChallengeRating: 2
+  myXPToGive: 450
   myAbilityScores:
     <Strength>k__BackingField:
       <Score>k__BackingField: 17

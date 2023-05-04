@@ -110,8 +110,9 @@ namespace MonsterQuest
             if (myGameState.myParty.OneAlive())
             {
                 Console.WriteLine(WinMessage());
+                SaveGameHelper.Delete();
             }
-            SaveGameHelper.Delete();
+            
         }
 
         List<string> CheckHeroesAlive()
